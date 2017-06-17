@@ -70,11 +70,10 @@
 
         .trianglesListWrapper {
             margin-left: 40px;
-            height: 550px;
+            height: 260px;
             width: 400px;
             display: inline-block;
             float: right;
-            margin-top: 40px;
         }
 
         .distanceOutputHelpMessage {
@@ -83,7 +82,7 @@
         }
 
         .trianglesListInnerWrapper {
-            height: 410px;
+            height: 230px;
             display: block;
             overflow: auto;
             border-bottom: 1px solid rgba(0, 0, 0, 0.19);
@@ -257,7 +256,7 @@
         }
 
         .referenceCanvasWrapper {
-            width: 280px;
+            width: 560px;
             height: 280px;
             cursor: pointer;
         }
@@ -337,8 +336,8 @@
             <span style="float: right">
                 <span data-toggle="buttons">
                    <div style="float: left; padding-right: 10px;">
-                <button type="button" style="margin-bottom: 8px;" class="alert-danger btn btn-secondary"
-                        onclick="reset()">Reset</button>
+                        <button type="button" style="margin-bottom: 8px;" class="alert-danger btn btn-secondary"
+                            onclick="reset()">Reset</button>
                    </div>
 
                    <div class="dropdown" style="float: left">
@@ -372,11 +371,11 @@
                 <div class="canvasWrapper">
                     <label class="canvasTitle">Image Stored In Database</label>
                     <div class="canvasShadow referenceCanvasWrapper">
-                        <canvas id="databaseImageCanvasImageContent" class="canvasBottom" width="280"
+                        <canvas id="databaseImageCanvasImageContent" class="canvasBottom" width="560"
                                 height="280"></canvas>
-                        <canvas id="databaseImageCanvasUiOverlay" class="canvasTop" width="280" height="280"></canvas>
-                        <canvas id="databaseImageCanvasImageOutline" class="canvasClickThrough" width="280" height="280"></canvas>
-                        <canvas id="databaseImageCanvasHighlightedTriangle" class="canvasClickThrough" width="280" height="280"></canvas>
+                        <canvas id="databaseImageCanvasUiOverlay" class="canvasTop" width="560" height="280"></canvas>
+                        <canvas id="databaseImageCanvasImageOutline" class="canvasClickThrough" width="560" height="280"></canvas>
+                        <canvas id="databaseImageCanvasHighlightedTriangle" class="canvasClickThrough" width="560" height="280"></canvas>
                     </div>
                 </div>
                 <div id="output">
@@ -393,26 +392,23 @@
                         <div class="fragmentCanvasWrapper">
                             <canvas class="canvasShadow" id="fragmentCanvas2" height="160" width="160"></canvas>
                         </div>
+                        <div class="trianglesListWrapper">
+                            <h5 class="resultsTitle">Results</h5>
+                            <div class="trianglesListInnerWrapper" id="trianglesListInnerWrapper">
+                                <table class="triangleList table ">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Area</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="triangleListBody" role="menu">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-            </div>
-            <div class="trianglesListWrapper">
-                <p class="alert-info distanceOutputHelpMessage">Hover over a result in the
-                    list below to see the matched image fragments. </p>
-                <h5 class="resultsTitle">Results</h5>
-                <div class="trianglesListInnerWrapper" id="trianglesListInnerWrapper">
-                    <table class="triangleList table ">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Area</th>
-                        </tr>
-                        </thead>
-                        <tbody id="triangleListBody" role="menu">
-
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

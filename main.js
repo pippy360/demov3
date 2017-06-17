@@ -2098,6 +2098,8 @@ function _debug_addlayer(imageSrc) {
         layer2.associatedLayer = layer1;
         g_globalState.interactiveCanvasState.layers.push(layer1);
         g_globalState.referenceCanvasState.layers.push(layer2);
+        g_globalState.referenceCanvasState.layers[1].appliedTransformations = getTranslateMatrix(280, 0);//hack
+        draw();//hack
     };
 }
 
