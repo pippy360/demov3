@@ -1567,7 +1567,7 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
-    if (g_globalState == null) {
+    if (g_globalState == null) {//hack
         return;
     }
 
@@ -1594,7 +1594,7 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mouseup(function (e) {
 });
 
 $("#" + REFERENCE_CANVAS_OVERLAY_ID).mousedown(function (e) {
-    if (g_globalState == null) {
+    if (g_globalState == null || true) {//hack
         return;
     }
 
@@ -1606,7 +1606,7 @@ $("#" + REFERENCE_CANVAS_OVERLAY_ID).mousedown(function (e) {
 });
 
 $("#" + REFERENCE_CANVAS_OVERLAY_ID).mousemove(function (e) {
-    if (g_globalState == null) {
+    if (g_globalState == null || true) {//hack
         return;
     }
 

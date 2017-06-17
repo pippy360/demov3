@@ -26,9 +26,20 @@
             cursor: pointer;
         }
 
-        .bigCanvasContainer {
-            /*width: 580px;*/
+        .demoAreaContainer {
+            width: 1200px;
+            display: block;
+        }
+
+        .bigCanvasContainerWrapper {
+            width: 1200px;
             float: left;
+            margin-bottom: 20px;
+        }
+
+        .bigCanvasContainer {
+            width: 910px;
+            margin: auto;
         }
 
         .prevBtn {
@@ -59,13 +70,21 @@
             margin-top: 20px;
         }
 
-        .canvasWrapper {
+        .canvasWrapperLeft {
             display: block;
             /*width: 285px;*/
             float: left;
             margin-top: 25px;
             margin-bottom: 40px;
             margin-right: 68px;
+        }
+
+        .canvasWrapperRight {
+            display: block;
+            /*width: 285px;*/
+            float: right;
+            margin-top: 25px;
+            margin-bottom: 40px;
         }
 
         .trianglesListWrapper {
@@ -147,6 +166,12 @@
             padding: 0px;
             margin-top: 3px;
         }
+
+        #output {
+            width: 1100px;
+            margin: auto;
+        }
+
         .aboutAreaWrapper {
             border-top: 1px solid rgba(0, 0, 0, 0.08);
             box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
@@ -164,7 +189,6 @@
 
         .smallCanvasWrapper {
             /*width: 750px;*/
-            padding-right: 20px;
             height: 200px;
         }
 
@@ -258,7 +282,6 @@
         .referenceCanvasWrapper {
             width: 560px;
             height: 280px;
-            cursor: pointer;
         }
 
         .canvasShadow {
@@ -306,7 +329,7 @@
     <div class="header">
         <div class="headerInner">
             <h1>Image Matching Demo</h1>
-            <p>Click and drag on an image to apply a transformation.</p>
+            <p>Click and drag on the query image to apply a transformation.</p>
         </div>
     </div>
     <div class="buttonsWrapper">
@@ -357,25 +380,29 @@
         <div id="mainContentContainer" class="">
             <div class="clickAndDragTitle">
             </div>
-            <div id="bigCanvasContainer" class="bigCanvasContainer">
-                <div class="canvasWrapper">
-                    <label class="canvasTitle">Query Image</label>
-                    <div class="canvasShadow interactiveCanvasWrapper">
-                        <canvas id="queryImageCanvasImageContent" class="canvasBottom" width="280"
-                                height="280"></canvas>
-                        <canvas id="queryImageCanvasUiOverlay" class="canvasTop" width="280" height="280"></canvas>
-                        <canvas id="queryImageCanvasImageOutline" class="canvasClickThrough" width="280" height="280"></canvas>
-                        <canvas id="queryImageCanvasHighlightedTriangle" class="canvasClickThrough" width="280" height="280"></canvas>
-                    </div>
-                </div>
-                <div class="canvasWrapper">
-                    <label class="canvasTitle">Images Stored In Database</label>
-                    <div class="canvasShadow referenceCanvasWrapper">
-                        <canvas id="databaseImageCanvasImageContent" class="canvasBottom" width="560"
-                                height="280"></canvas>
-                        <canvas id="databaseImageCanvasUiOverlay" class="canvasTop" width="560" height="280"></canvas>
-                        <canvas id="databaseImageCanvasImageOutline" class="canvasClickThrough" width="560" height="280"></canvas>
-                        <canvas id="databaseImageCanvasHighlightedTriangle" class="canvasClickThrough" width="560" height="280"></canvas>
+            <div class="demoAreaContainer">
+                <div id="bigCanvasContainerWrapper" class="bigCanvasContainerWrapper">
+                    <div id="bigCanvasContainer" class="bigCanvasContainer">
+                        <div class="canvasWrapperLeft">
+                            <label class="canvasTitle">Query Image</label>
+                            <div class="canvasShadow interactiveCanvasWrapper">
+                                <canvas id="queryImageCanvasImageContent" class="canvasBottom" width="280"
+                                        height="280"></canvas>
+                                <canvas id="queryImageCanvasUiOverlay" class="canvasTop" width="280" height="280"></canvas>
+                                <canvas id="queryImageCanvasImageOutline" class="canvasClickThrough" width="280" height="280"></canvas>
+                                <canvas id="queryImageCanvasHighlightedTriangle" class="canvasClickThrough" width="280" height="280"></canvas>
+                            </div>
+                        </div>
+                        <div class="canvasWrapperRight">
+                            <label class="canvasTitle">Images Stored In Database</label>
+                            <div class="canvasShadow referenceCanvasWrapper">
+                                <canvas id="databaseImageCanvasImageContent" class="canvasBottom" width="560"
+                                        height="280"></canvas>
+                                <canvas id="databaseImageCanvasUiOverlay" class="canvasTop" width="560" height="280"></canvas>
+                                <canvas id="databaseImageCanvasImageOutline" style="visibility: hidden" class="canvasClickThrough" width="560" height="280"></canvas>
+                                <canvas id="databaseImageCanvasHighlightedTriangle" class="canvasClickThrough" width="560" height="280"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="output">
