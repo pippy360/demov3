@@ -1041,7 +1041,7 @@ function getTableEntry(key, layerIndex, area, listIndex) {
     const outputStrClass = "triangleTRAll " + "triangleTR" + layerIndex + "_" + triangleIndex;
     var outputStr =
         "<tr class=\"" + outputStrClass + "\" triangleIndex=\"" + triangleIndex
-        + "\" layerIndex=\""+layerIndex+"\" onmouseover=\"highlightTriangleByListIndex(" + listIndex + ")\">" +
+        + "\" layerIndex=\""+layerIndex+"\" onmouseover=\"highlightTriangleByListIndex("+ layerIndex +" ," + listIndex + ")\">" +
         "<td>" +  triangleIndex + "</td>" +
         "<td>" + Math.round(area) + " </td>" +
         "</tr>";
@@ -1222,7 +1222,8 @@ function drawLayerWithAppliedTransformations(canvasState, drawingLayer, dontCrop
 }
 
 function clearOutputListAndWipeCanvas() {
-    $("#triangleListBody").html("");
+    $("#triangleListBody1").html("");
+    $("#triangleListBody2").html("");
     var c1 = g_globalState.interactiveCanvasState.highlightedTriangleLayerCanvasContext;
     var c2 = g_globalState.referenceCanvasState.highlightedTriangleLayerCanvasContext;
     clearCanvasByContext(c1);
@@ -1248,6 +1249,9 @@ function highlightTriangleByListIndex(tabIndex, itemIndex) {
 function highlightFirstElementOfOutputList() {
     var tabIndex = 0;
     var itemIndex = 0;
+    if ($("#triangleListBody1").length < 1) {
+         tabIndex = 1;//hack
+    }
     highlightTriangleByListIndex(tabIndex, itemIndex);
 }
 
@@ -1262,9 +1266,9 @@ function generateOutputList(triangleMapArray) {
             var tri = triangleMap.get(key.value).referenceTriangle;
             var area = getArea(tri);
             if (i==0) {
-                listOutputHtml1 = listOutputHtml1 + getTableEntry(key, i, area, listCount);
+                listOutputHtml1 = listOutputHtml1 + getTableEntry(key, i, area, j);
             } else {
-                listOutputHtml2 = listOutputHtml2 + getTableEntry(key, i, area, listCount);
+                listOutputHtml2 = listOutputHtml2 + getTableEntry(key, i, area, j);
             }
             listCount++;
         }
@@ -1824,7 +1828,7 @@ function highlightPrevTriangle() {
     } else {
         listId = "#triangleListBody2";
     }
-    var pos = $(listId + ' tr:nth-child('+(newIndex+1)+')').position().top - $("#triangleListBody").position().top;
+    var pos = $(listId + ' tr:nth-child('+(newIndex+1)+')').position().top - $(listId).position().top;
     $(".trianglesListInnerWrapper").scrollTop(pos);
     highlightTriangleByListIndex(tabIndex, newIndex);
 }
@@ -1842,7 +1846,7 @@ function highlightNextTriangle() {
     if (newIndex >= len){
         newIndex = len - 1;
     }
-    var pos = $(listId + ' tr:nth-child('+(newIndex+1)+')').position().top - $("#triangleListBody").position().top;
+    var pos = $(listId + ' tr:nth-child('+(newIndex+1)+')').position().top - $(listId).position().top;
     $(".trianglesListInnerWrapper").scrollTop(pos);
     highlightTriangleByListIndex(tabIndex, newIndex);
 }
