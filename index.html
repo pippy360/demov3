@@ -15,6 +15,12 @@
             font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         }
 
+        .nav>li>a {
+            padding: 10px 15px;
+            display: block;
+            position: relative;
+        }
+
         #mainContentContainer {
             padding: 0px 30px;
             margin: 0px auto;
@@ -420,19 +426,37 @@
                             <canvas class="canvasShadow" id="fragmentCanvas2" height="160" width="160"></canvas>
                         </div>
                         <div class="trianglesListWrapper">
-                            <h5 class="resultsTitle">Results</h5>
+                            <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                                <li role="presentation" class="active" ><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Image 1 matches</a></li>
+                                <li role="presentation" class="active" ><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Image 2 matches</a></li>
+                            </ul>
                             <div class="trianglesListInnerWrapper" id="trianglesListInnerWrapper">
-                                <table class="triangleList table ">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Area</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="triangleListBody" role="menu">
+                                <div class="listTab1">
+                                    <table class="triangleList table ">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Area</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="triangleListBody1" role="menu">
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="listTab1">
+                                    <table class="triangleList table ">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Area</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="triangleListBody1" role="menu">
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

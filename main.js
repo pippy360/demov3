@@ -119,7 +119,8 @@ function newGlobalState() {
         temporaryAppliedTransformations: null,
         transformationMatBeforeTemporaryTransformations: null,
         pageMouseDownPosition: null,
-        highlightedTriangleListIndex: null
+        highlightedTriangleListTabIndex: null,
+        highlightedTriangleListItemIndex: null
     };
 }
 
@@ -1229,34 +1230,48 @@ function clearOutputListAndWipeCanvas() {
     $("#output").css("visibility", "hidden");
 }
 
-function highlightTriangleByListIndex(index) {
-    g_globalState.highlightedTriangleListIndex = index;
-    
-    const firstElem = $('#triangleListBody tr').eq(index);
+function highlightTriangleByListIndex(tabIndex, itemIndex) {
+    g_globalState.highlightedTriangleListItemIndex = itemIndex;
+    g_globalState.highlightedTriangleListTabIndex = tabIndex;
+
+    var firstElem;
+    if (tabIndex == 0) {
+        firstElem = $('#triangleListBody1 tr').eq(itemIndex);
+    } else {
+        firstElem = $('#triangleListBody2 tr').eq(itemIndex);
+    }
     var layerIndex = firstElem.attr("layerIndex");
     var triangleIndex = firstElem.attr("triangleIndex");
     highlightTriangle(parseInt(layerIndex), parseInt(triangleIndex));
 }
 
 function highlightFirstElementOfOutputList() {
-    highlightTriangleByListIndex(0);
+    var tabIndex = 0;
+    var itemIndex = 0;
+    highlightTriangleByListIndex(tabIndex, itemIndex);
 }
 
 function generateOutputList(triangleMapArray) {
-    var outputStr = "";
+    var listOutputHtml1 = "";
+    var listOutputHtml2 = "";
     var listCount = 0;
     for (var i = 0; i < triangleMapArray.length; i++) {
         var triangleMap = triangleMapArray[i];
         var keys = triangleMap.keys();
-        for (var key = keys.next(); !key.done; key = keys.next()) { //iterate over keys
+        for (var key = keys.next(), j = 0; !key.done; key = keys.next(), j++) { //iterate over keys
             var tri = triangleMap.get(key.value).referenceTriangle;
             var area = getArea(tri);
-            outputStr = outputStr + getTableEntry(key, i, area, listCount);
+            if (i==0) {
+                listOutputHtml1 = listOutputHtml1 + getTableEntry(key, i, area, listCount);
+            } else {
+                listOutputHtml2 = listOutputHtml2 + getTableEntry(key, i, area, listCount);
+            }
             listCount++;
         }
     }
 
-    $("#triangleListBody").html(outputStr);
+    $("#triangleListBody1").html(listOutputHtml1);
+    $("#triangleListBody2").html(listOutputHtml2);
     $(".list-group-item").hover(function () {
             $(this).addClass("active");
         },
@@ -1414,8 +1429,22 @@ function drawLayers(canvasState, drawingLayers) {
             if (canvasState === g_globalState.referenceCanvasState) {
                 skipUiLayer = true;
             }
-        }        
-        drawLayerWithAppliedTransformations(canvasState, drawingLayer, dontCropImage, skipUiLayer);
+        }
+
+        if (canvasState === g_globalState.referenceCanvasState && drawingLayer.computedTriangles.length == 0) {
+            //don't draw layer because no matches
+            var ctx = g_globalState.referenceCanvasState.imageLayerCanvasContext;
+            ctx.font = '20pt Calibri';
+            ctx.fillStyle = 'black';
+            if (drawingLayer.layer == g_globalState.referenceCanvasState.layers[0]) {
+                ctx.fillText("No Match", 90, 140);
+            } else {
+                ctx.fillText("No Match", 280+90, 140);
+            }
+            ctx.fillText("No Match", 90, 140);
+        } else {
+            drawLayerWithAppliedTransformations(canvasState, drawingLayer, dontCropImage, skipUiLayer);
+        }
     }
 
     if (isCroppingEffectActive) {
@@ -1519,14 +1548,14 @@ function toggleDrawReferenceUIOverlayWrapper(event) {
     g_drawingOptions.drawReferenceCanvasUiLayer = !g_drawingOptions.drawReferenceCanvasUiLayer;
     $("#toggleDrawReferenceUIOverlayButton").toggleClass('backgroundColourGrey');
     draw();
-    highlightTriangleByListIndex(g_globalState.highlightedTriangleListIndex);
+    highlightTriangleByListIndex(g_globalState.highlightedTriangleListTabIndex, g_globalState.highlightedTriangleListItemIndex);
 }
 
 function toggleDrawInteractiveUIOverlayWrapper(event) {
     g_drawingOptions.drawInteractiveCanvasUiLayer = !g_drawingOptions.drawInteractiveCanvasUiLayer;
     $("#toggleDrawInteractiveUIOverlayButton").toggleClass('backgroundColourGrey');
     draw();
-    highlightTriangleByListIndex(g_globalState.highlightedTriangleListIndex);
+    highlightTriangleByListIndex(g_globalState.highlightedTriangleListTabIndex, g_globalState.highlightedTriangleListItemIndex);
 }
 
 $(document).mousedown(function (e) {
@@ -1783,24 +1812,39 @@ function handleMouseMoveCrop(mousePosition, activeLayer) {
 }
 
 function highlightPrevTriangle() {
-    var newIndex = g_globalState.highlightedTriangleListIndex - 1;
+    var newIndex = g_globalState.highlightedTriangleListItemIndex - 1;
     if (newIndex < 0) {
         newIndex = 0;
     }
-    var pos = $('#triangleListBody tr:nth-child('+(newIndex+1)+')').position().top - $("#triangleListBody").position().top;
+
+    var tabIndex = g_globalState.highlightedTriangleListTabIndex;
+    var listId = "";
+    if (tabIndex === 0) {
+        listId = "#triangleListBody1";
+    } else {
+        listId = "#triangleListBody2";
+    }
+    var pos = $(listId + ' tr:nth-child('+(newIndex+1)+')').position().top - $("#triangleListBody").position().top;
     $(".trianglesListInnerWrapper").scrollTop(pos);
-    highlightTriangleByListIndex(newIndex);
+    highlightTriangleByListIndex(tabIndex, newIndex);
 }
 
 function highlightNextTriangle() {
-    var newIndex = g_globalState.highlightedTriangleListIndex + 1;
-    var len = $('#triangleListBody tr').length;
+    var newIndex = g_globalState.highlightedTriangleListItemIndex + 1;
+    var tabIndex = g_globalState.highlightedTriangleListTabIndex;
+    var listId = "";
+    if (tabIndex === 0) {
+        listId = "#triangleListBody1";
+    } else {
+        listId = "#triangleListBody2";
+    }
+    var len = $(listId+' tr').length;
     if (newIndex >= len){
         newIndex = len - 1;
     }
-    var pos = $('#triangleListBody tr:nth-child('+(newIndex+1)+')').position().top - $("#triangleListBody").position().top;
+    var pos = $(listId + ' tr:nth-child('+(newIndex+1)+')').position().top - $("#triangleListBody").position().top;
     $(".trianglesListInnerWrapper").scrollTop(pos);
-    highlightTriangleByListIndex(newIndex);
+    highlightTriangleByListIndex(tabIndex, newIndex);
 }
 
 function getCenterPointOfPoly(arr) {
