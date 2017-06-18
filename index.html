@@ -443,11 +443,11 @@
                         </div>
                         <div class="trianglesListWrapper">
                             <ul class="nav nav-tabs" id="myTabs" role="tablist">
-                                <li role="presentation" class="active" ><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="listTab1" aria-expanded="true">Image 1 matches</a></li>
-                                <li role="presentation" ><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="listTab2" aria-expanded="true">Image 2 matches</a></li>
+                                <li role="presentation" class="active" ><a href="#listTab1" id="home-tab1" role="tab" data-toggle="tab" aria-controls="listTab1" aria-expanded="true">Image 1 matches</a></li>
+                                <li role="presentation" ><a href="#listTab2" id="home-tab2" role="tab" data-toggle="tab" aria-controls="listTab2" aria-expanded="true">Image 2 matches</a></li>
                             </ul>
-                            <div class="trianglesListInnerWrapper" id="trianglesListInnerWrapper">
-                                <div id="listTab1" >
+                            <div class="trianglesListInnerWrapper tab-content" id="trianglesListInnerWrapper">
+                                <div id="listTab1" class="tab-pane show active">
                                     <table class="triangleList table ">
                                         <thead>
                                         <tr>
@@ -460,7 +460,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div id="listTab2">
+                                <div id="listTab2" class="tab-pane">
                                     <table class="triangleList table ">
                                         <thead>
                                         <tr>
@@ -525,6 +525,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="main.js"></script>
 
 <script>
@@ -538,7 +539,15 @@ $(".moreButton").click(function() {
 $('#myTabs a').click(function (e) {
     e.preventDefault();
     $(this).tab('show');
-    console.log("clicked");
+    if (g_globalState == null) {
+        //page not loaded yet
+    } else {
+        if ($(this)[0].id == "home-tab1") {
+            g_globalState.highlightedTriangleListTabIndex = 0;
+        } else {
+            g_globalState.highlightedTriangleListTabIndex = 1;
+        }
+    }
 });
 
 </script>
