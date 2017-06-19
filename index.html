@@ -345,6 +345,10 @@
         .backgroundColourGrey {
             background-color: #eee;
         }
+
+        .triangleList tr{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -450,12 +454,6 @@
                             <div class="trianglesListInnerWrapper tab-content" id="trianglesListInnerWrapper">
                                 <div id="listTab1" class="tab-pane show active">
                                     <table class="triangleList table ">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Area</th>
-                                        </tr>
-                                        </thead>
                                         <tbody id="triangleListBody1" role="menu">
 
                                         </tbody>
@@ -463,12 +461,6 @@
                                 </div>
                                 <div id="listTab2" class="tab-pane">
                                     <table class="triangleList table ">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Area</th>
-                                        </tr>
-                                        </thead>
                                         <tbody id="triangleListBody2" role="menu">
 
                                         </tbody>
@@ -533,7 +525,7 @@
 
 $(".moreButton").click(function() {		
 	$('html, body').animate({		
-		scrollTop: $(".moreButton").offset().top		
+		scrollTop: $(".moreButton").offset().top
 	}, 500);		
 });
 

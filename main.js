@@ -1040,12 +1040,11 @@ function getTableEntry(key, layerIndex, area, listIndex) {
     const triangleIndex = key.value;
     const outputStrClass = "triangleTRAll " + "triangleTR" + layerIndex + "_" + triangleIndex;
     var outputStr =
-        "<tr class=\"" + outputStrClass + "\" triangleIndex=\"" + triangleIndex
-        + "\" layerIndex=\""+layerIndex+"\" onmouseover=\"highlightTriangleByListIndex("+ layerIndex +" ," + listIndex + ")\">" +
-        "<td>" +  triangleIndex + "</td>" +
-        "<td>" + Math.round(area) + " </td>" +
-        "</tr>";
-    return outputStr;
+    "<tr class=\"" + outputStrClass + "\" triangleIndex=\"" + triangleIndex
+    + "\" layerIndex=\""+layerIndex+"\" onmouseover=\"highlightTriangleByListIndex("+ layerIndex +" ," + listIndex + ")\">" +
+    "<td>" + (listIndex+1) + "</td>" +
+    "</tr>";
+return outputStr;
 }
 
 function paintCanvasWhite(canvasContext) {
