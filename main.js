@@ -44,7 +44,7 @@ const REFERENCE_HIGHLIGHTED_CANVAS_ID = "databaseImageCanvasHighlightedTriangle"
 var g_numberOfKeypoints = 30;
 const MIN_CROPPING_POLYGON_AREA = 600;
 
-const ORANGE_COLOUR = [76, 175, 80];//now green
+const ORANGE_COLOUR = [0, 188, 212];//now green
 const BLUE_COLOUR = [33, 150, 243];
 
 function newStep(minPntDist, maxPntDist, minTriArea, colour) {
