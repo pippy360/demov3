@@ -44,7 +44,7 @@ const REFERENCE_HIGHLIGHTED_CANVAS_ID = "databaseImageCanvasHighlightedTriangle"
 var g_numberOfKeypoints = 30;
 const MIN_CROPPING_POLYGON_AREA = 600;
 
-const ORANGE_COLOUR = [255, 87, 34];
+const ORANGE_COLOUR = [76, 175, 80];//now green
 const BLUE_COLOUR = [33, 150, 243];
 
 function newStep(minPntDist, maxPntDist, minTriArea, colour) {
@@ -958,8 +958,7 @@ function areAllKeypointsValid(triangle, validKeypoints) {
 }
 
 //Returns the filtered triangle along with the triangles previous index
-function filterInvalidTriangles(triangles, validKeypoints, minPntDist, maxPntDist, minTriArea) {
-    var ret = [];
+function filterInvalidTriangles(triangles, validKeypoints, minPntDist, maxPntDist, minTriArea, ret) {
     for (var i = 0; i < triangles.length; i++) {
         var triangle = triangles[i];
 
@@ -1058,21 +1057,10 @@ function filterInvalidTrianglesForAllSteps(triangles, validKeypoints) {
     for (var i = 0; i < g_steps.length; i++) {
 
         var currentStep = g_steps[i];
-        var tempFilteredReferenceImageTriangles = filterInvalidTriangles(triangles,
-            validKeypoints, currentStep.minPntDist, currentStep.maxPntDist, currentStep.minTriArea);
-
-        //add all the triangles while avoiding adding duplicates
-
-        for (var j = 0; j < tempFilteredReferenceImageTriangles.length; j++) {
-            var currentTriangleWithindex = tempFilteredReferenceImageTriangles[j];
-            if (containsMatchingTriangleWithIndexes(filteredReferenceImageTrianglesForAllSteps, currentTriangleWithindex.triangle)) {
-                //ignore, don't add duplicates
-            } else {
-                filteredReferenceImageTrianglesForAllSteps.push(currentTriangleWithindex);
-            }
-        }
+        //result returned in array passed in as last parameter
+        filterInvalidTriangles(triangles,
+            validKeypoints, currentStep.minPntDist, currentStep.maxPntDist, currentStep.minTriArea, filteredReferenceImageTrianglesForAllSteps);
     }
-
     return filteredReferenceImageTrianglesForAllSteps;
 }
 
