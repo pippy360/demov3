@@ -811,6 +811,17 @@ function highlightTriangle(layerIndex, triangleIndex) {
     var pHashDistance = distance(pHash1, pHash2);
     $("#pHashDistanceOutputWrapper").html("" + pHashDistance + "");
 
+    if (pHashDistance > 8) {
+        $(".distanceOutputData").addClass("invalid");
+        $(".distanceOutputTitle").removeClass("valid");
+        $(".distanceOutputTitle").addClass("invalid");
+    } else {
+        $(".distanceOutputData").removeClass("invalid");
+        $(".distanceOutputData").addClass("valid");
+        $(".distanceOutputTitle").removeClass("invalid");
+        $(".distanceOutputTitle").addClass("valid");
+    }
+
 }
 
 function drawBackgroudImageWithTransformationMatrix(canvasContext, image, transformationMat) {
