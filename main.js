@@ -812,14 +812,13 @@ function highlightTriangle(layerIndex, triangleIndex) {
     $("#pHashDistanceOutputWrapper").html("" + pHashDistance + "");
 
     if (pHashDistance > 8) {
-        $(".distanceOutputData").addClass("invalid");
-        $(".distanceOutputTitle").removeClass("valid");
-        $(".distanceOutputTitle").addClass("invalid");
+        $("#matchNoMatchLabel").html("(No match)");
+        $("#matchNoMatchLabel").removeClass("valid");
+        $("#matchNoMatchLabel").addClass("invalid");
     } else {
-        $(".distanceOutputData").removeClass("invalid");
-        $(".distanceOutputData").addClass("valid");
-        $(".distanceOutputTitle").removeClass("invalid");
-        $(".distanceOutputTitle").addClass("valid");
+        $("#matchNoMatchLabel").html("(Match)");
+        $("#matchNoMatchLabel").removeClass("invalid");
+        $("#matchNoMatchLabel").addClass("valid");
     }
 
 }
