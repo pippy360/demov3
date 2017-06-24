@@ -65,6 +65,7 @@
         }
 
         .prevBtn {
+            float: left;
             margin-left: 35px;
         }
   
@@ -364,10 +365,6 @@
         .triangleList tr{
             text-align: center;
         }
-
-        p {
-            font-size: 20px;
-        }
     </style>
 </head>
 <body>
@@ -461,6 +458,7 @@
                             <label id="pHashDistanceOutputWrapper" class="distanceOutputData"> 0 </label>
                             <button class="prevBtn btn btn-secondary" onclick="highlightPrevTriangle()">prev</button>
                             <button class="nextBtn btn btn-secondary" onclick="highlightNextTriangle()">next</button>
+                            <div id="matchNoMatchLabel"></div>
                         </div>
                         <div class="fragmentCanvasWrapper">
                             <canvas class="canvasShadow" id="fragmentCanvas2" height="160" width="160"></canvas>
