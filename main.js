@@ -1247,7 +1247,7 @@ function highlightTriangleByListIndex(tabIndex, itemIndex) {
 function highlightFirstElementOfOutputList() {
     var tabIndex = 0;
     var itemIndex = 0;
-    if ($("#triangleListBody1").length < 1) {
+    if ($("#triangleListBody1 tr").length < 1) {
          tabIndex = 1;//hack
     }
     highlightTriangleByListIndex(tabIndex, itemIndex);
