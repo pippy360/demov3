@@ -869,9 +869,13 @@ function drawTriangleWithColour(ctx, tri, strokeColour, fillColour, enableFill) 
     }
 }
 
-function drawKeypoints(interactiveCanvasContext, keypoints) {
+function drawKeypoints(interactiveCanvasContext, keypoints, colourString) {
+    if(colourString) {
+        interactiveCanvasContext.strokeStyle = colourString;
+    } else {
+        interactiveCanvasContext.strokeStyle = "red";
+    }
     interactiveCanvasContext.beginPath();
-    interactiveCanvasContext.strokeStyle = "red";
     for (var i = 0; i < keypoints.length; i++) {
         var currentKeypoint = keypoints[i];
         interactiveCanvasContext.rect(currentKeypoint.x, currentKeypoint.y, 3, 3);
@@ -2162,6 +2166,7 @@ var end = false;
 var animationStartMatrix;
 var mult = 1;
 
+var g_triangleKeypoints = [{x: 100, y: 20}, {x: 20, y: 200}, {x: 200, y: 200}];
 
 function animation7(frame) {
     var animationFrames = 60*mult;
@@ -2220,6 +2225,16 @@ function animation4(frame) {
     };
 
     animationEnd(frame);
+    ctx.beginPath();
+    let pt = {};
+    pt = g_triangleKeypoints[0];
+    ctx.moveTo(pt[0],pt[1]);
+    pt = g_triangleKeypoints[1];
+    ctx.lineTo(pt[0],pt[1]);
+    pt = g_triangleKeypoints[2];
+    ctx.lineTo(pt[0],pt[1]);
+    ctx.closePath();
+    ctx.stroke();
     return (frame >= animationFrames);
 }
 
@@ -2236,7 +2251,21 @@ function animation3(frame) {
     //     y: -endy*percentageDone
     // };
 
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
     animationEnd(frame);
+    drawKeypoints(ctx, g_triangleKeypoints, "blue");
+    ctx.beginPath();
+    debugger;
+    let pt = {};
+    pt = g_triangleKeypoints[0];
+    ctx.moveTo(pt[0],pt[1]);
+    pt = g_triangleKeypoints[1];
+    ctx.lineTo(pt[0],pt[1]);
+    pt = g_triangleKeypoints[2];
+    ctx.lineTo(pt[0],pt[1]);
+    ctx.closePath();
+    ctx.stroke();
     //move the fragment!!!
     return (frame >= animationFrames);
 }
@@ -2264,14 +2293,19 @@ function animation2(frame) {
 
     //pick 3 center keypoints
     ctx.beginPath();
-    ctx.moveTo(120,10);
-    ctx.lineTo(30,180);
-    ctx.lineTo(200,180);
+    let pt = {};
+    pt = g_triangleKeypoints[0];
+    ctx.moveTo(pt[0],pt[1]);
+    pt = g_triangleKeypoints[1];
+    ctx.lineTo(pt[0],pt[1]);
+    pt = g_triangleKeypoints[2];
+    ctx.lineTo(pt[0],pt[1]);
     ctx.closePath();
     ctx.stroke();
 
     return (frame >= animationFrames);
 }
+
 
 function animation1(frame) {
     var animationFrames = 20*mult;
@@ -2285,7 +2319,10 @@ function animation1(frame) {
     //draw a bunch of keypoints
     //draw blue ones then red
 
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
     animationEnd(frame);
+    drawKeypoints(ctx, g_triangleKeypoints, "blue");
     return (frame >= animationFrames);
 }
 
