@@ -1884,7 +1884,7 @@ function handleMouseMoveOnDocument(e) {
     }
 
     const activeLayer = getActiveLayer(globalState);
-    const imageOutline = applyTransformationToImageOutline(activeLayer.nonTransformedImageOutline, activeLayer.appliedTransformations);
+    const imageOutline = applyTransformationToImageOutline(activeLayer.nonTransformedImageOutline, g_globalState.transformationMatBeforeTemporaryTransformations);
     var shapeCenter = getCenterPointOfPoly(imageOutline);
     shapeCenter = {
         x: shapeCenter[0],
