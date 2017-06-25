@@ -1584,7 +1584,8 @@ $(document).mouseup(function (e) {
     }
 });
 
-$("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
+function canvasMouseDownEvent(e) {
+
     if (g_globalState == null) {
         return;
     }
@@ -1594,6 +1595,14 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
     e.preventDefault();
     g_globalState.isMouseDownAndClickedOnCanvas = true;
     handleMouseDownOnCanvas(e);
+}
+
+$("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
+    canvasMouseDownEvent(e);
+});
+
+$("#" + INTERACTIVE_CANVAS_OVERLAY_ID).bind( "touchstart", function (e) {
+    canvasMouseDownEvent(e);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
