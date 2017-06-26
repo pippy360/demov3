@@ -1603,8 +1603,7 @@ $(document).mouseup(function (e) {
 });
 
 $(document).bind( "touchend", function (e) {
-        mouseUpEvent()
-    }
+    mouseUpEvent()
 });
 
 function canvasMouseDownEvent(pageMousePosition, canvasMousePosition) {
