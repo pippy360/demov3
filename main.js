@@ -1579,10 +1579,12 @@ $(document).mousemove(function (e) {
 });
 
 $(document).bind( "touchmove", function (e) {
-    e.preventDefault();
     const pageMousePosition = {
         x: e.originalEvent.touches[0].pageX, 
         y: e.originalEvent.touches[0].pageY
+    }
+    if (g_globalState != null && g_globalState.isMouseDownAndClickedOnCanvas) {
+        e.preventDefault();
     }
     mouseMoveOnDocumentEvent(pageMousePosition);
 });
