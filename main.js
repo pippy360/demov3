@@ -1592,30 +1592,35 @@ $(document).mouseup(function (e) {
     }
 });
 
-function canvasMouseDownEvent(e, canvasElem) {
-
+function canvasMouseDownEvent(pageMousePosition, canvasMousePosition) {
     if (g_globalState == null) {
         return;
     }
 
     g_globalState.activeCanvas = g_globalState.interactiveCanvasState;
-
-    e.preventDefault();
     g_globalState.isMouseDownAndClickedOnCanvas = true;
-    handleMouseDownOnCanvas(e, canvasElem);
+    handleMouseDownOnCanvas(pageMousePosition, canvasMousePosition);
 }
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
+    e.preventDefault();
+    
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
-    canvasMouseDownEvent(e, canvasElem);
+    const pageMousePosition = getCurrentPageMousePosition(e);
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
+    canvasMouseDownEvent(pageMousePosition, canvasMousePosition);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).bind( "touchstart", function (e) {
+    e.preventDefault();
+    
+    const pageMousePosition = getCurrentPageMousePosition(e);
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
-    canvasMouseDownEvent(e, canvasElem);
+    canvasMouseDownEvent(pageMousePosition, canvasMousePosition);
 });
 
-function canvasMouseMoveEvent(e, canvasElem) {
+function canvasMouseMoveEvent(canvasMousePosition) {
     if (g_globalState == null) {//hack
         return;
     }
@@ -1623,7 +1628,6 @@ function canvasMouseMoveEvent(e, canvasElem) {
     const layers = g_globalState.interactiveCanvasState.layers;
     const canvasContext = g_globalState.interactiveCanvasState.imageOutlineLayerCanvasContext;
     
-    var canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     g_globalState.interactiveCanvasState.imageOutlineHighlightLayer = getActiveLayerWithCanvasPosition(canvasMousePosition, layers, null);
 
     if (g_globalState == null || g_globalState.activeCanvas != g_globalState.interactiveCanvasState) {
@@ -1631,18 +1635,24 @@ function canvasMouseMoveEvent(e, canvasElem) {
     }
 
     if (g_globalState.isMouseDownAndClickedOnCanvas) {
-        handleMouseMoveOnCanvas(e, canvasElem);
+        handleMouseMoveOnCanvas(canvasMousePosition);
     }
 }
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
+    const pageMousePosition = getCurrentPageMousePosition(e);
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
-    canvasMouseMoveEvent(e, canvasElem);
+
+    canvasMouseMoveEvent(canvasMousePosition);
 });
 
 $(document).bind( "touchmove", function (e) {
+    const pageMousePosition = getCurrentPageMousePosition(e);
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
-    canvasMouseMoveEvent(e, canvasElem);
+
+    canvasMouseMoveEvent(canvasMousePosition);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mouseup(function (e) {
@@ -1909,9 +1919,7 @@ function drawLayerImageOutline(ctx, imageOutlinePolygon) {
     ctx.stroke();
 }
 
-function handleMouseMoveOnCanvas(e, canvasElem) {
-    var canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
-
+function handleMouseMoveOnCanvas(canvasMousePosition) {
     switch (g_globalState.currentTranformationOperationState) {
         case enum_TransformationOperation.TRANSLATE:
             //do nothing
@@ -1956,9 +1964,7 @@ function getActiveLayerWithCanvasPosition(canvasMousePosition, layers, noMatchRe
 
 }
 
-function handleMouseDownOnCanvas(e, canvasElem) {
-    const pageMousePosition = getCurrentPageMousePosition(e);
-    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
+function handleMouseDownOnCanvas(pageMousePosition, canvasMousePosition) {
 
     g_globalState.pageMouseDownPosition = pageMousePosition;
     g_globalState.temporaryAppliedTransformations.transformationCenterPoint = canvasMousePosition;
