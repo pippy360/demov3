@@ -499,7 +499,7 @@
             <h2>About</h2>
             <br>
             <p>
-                Stuff about it being sublinear time. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+               This demo showcases an algorithm which performs 2D affine transformation-invariant partial image-matching in sublinear time. The algorithm compares the input to its database of indexed images and determines if the input matches any image in the database (figure 1: match of identical images). 2D affine transformations can be applied to an image and so long as the original is stored in the database, the algorithm will match the two. This means that images which have been scaled (uniformly or non-uniformly), skewed, translated, cropped or rotated (or have undergone a combination of these transformations) can be matched to their original (figure 2: example of transformed images - could be the mp4 of dog matching with red lines). If the input is a composite of images or image fragments, the algorithm will return matches for each image/image fragment (figure 3: george Costanza’s head on something, etc.).
             </p>
             <br>
             <h2>How does it work?</h2>
