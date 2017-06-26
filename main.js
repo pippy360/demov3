@@ -1563,11 +1563,10 @@ $(document).mousedown(function (e) {
     //ignore
 });
 
-function mouseMoveOnDocumentEvent(e) {
+function mouseMoveOnDocumentEvent(pageMousePosition) {
     if (g_globalState != null && g_globalState.isMouseDownAndClickedOnCanvas) {
         g_globalState.referenceImageHighlightedTriangle = null;
         g_globalState.activeCanvas.imageOutlineHighlightLayer = g_globalState.activeCanvas.activeLayer;
-        var pageMousePosition = getCurrentPageMousePosition(e);
         handleMouseMoveOnDocument(pageMousePosition);
         draw();
         clearOutputListAndWipeCanvas();
@@ -1575,11 +1574,14 @@ function mouseMoveOnDocumentEvent(e) {
 }
 
 $(document).mousemove(function (e) {
-    mouseMoveOnDocumentEvent(e);
+    var pageMousePosition = getCurrentPageMousePosition(e);
+    mouseMoveOnDocumentEvent(pageMousePosition);
 });
 
 $(document).bind( "touchmove", function (e) {
-    mouseMoveOnDocumentEvent(e);
+    debugger;
+    var pageMousePosition = getCurrentPageMousePosition(e);
+    mouseMoveOnDocumentEvent(pageMousePosition);
 });
 
 $(document).mouseup(function (e) {
