@@ -1563,7 +1563,7 @@ $(document).mousedown(function (e) {
     //ignore
 });
 
-$(document).mousemove(function (e) {
+function mouseMoveOnDocumentEvent(e) {
     if (g_globalState != null && g_globalState.isMouseDownAndClickedOnCanvas) {
         g_globalState.referenceImageHighlightedTriangle = null;
         g_globalState.activeCanvas.imageOutlineHighlightLayer = g_globalState.activeCanvas.activeLayer;
@@ -1571,6 +1571,14 @@ $(document).mousemove(function (e) {
         draw();
         clearOutputListAndWipeCanvas();
     }
+}
+
+$(document).mousemove(function (e) {
+    mouseMoveOnDocumentEvent(e);
+});
+
+$(document).bind( "touchmove", function (e) {
+    mouseMoveOnDocumentEvent(e);
 });
 
 $(document).mouseup(function (e) {
@@ -1598,14 +1606,16 @@ function canvasMouseDownEvent(e) {
 }
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
+    debugger;
     canvasMouseDownEvent(e);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).bind( "touchstart", function (e) {
+    debugger;
     canvasMouseDownEvent(e);
 });
 
-$("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
+function canvasMouseMoveEvent(e) {
     if (g_globalState == null) {//hack
         return;
     }
@@ -1623,6 +1633,14 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
     if (g_globalState.isMouseDownAndClickedOnCanvas) {
         handleMouseMoveOnCanvas(e);
     }
+}
+
+$("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
+    canvasMouseMoveEvent(e);
+});
+
+$(document).bind( "touchmove", function (e) {
+    canvasMouseMoveEvent(e);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mouseup(function (e) {
