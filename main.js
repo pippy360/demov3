@@ -1592,7 +1592,7 @@ $(document).mouseup(function (e) {
     }
 });
 
-function canvasMouseDownEvent(e) {
+function canvasMouseDownEvent(e, canvasElem) {
 
     if (g_globalState == null) {
         return;
@@ -1602,28 +1602,28 @@ function canvasMouseDownEvent(e) {
 
     e.preventDefault();
     g_globalState.isMouseDownAndClickedOnCanvas = true;
-    handleMouseDownOnCanvas(e);
+    handleMouseDownOnCanvas(e, canvasElem);
 }
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
-    debugger;
-    canvasMouseDownEvent(e);
+    var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID);
+    canvasMouseDownEvent(e, canvasElem);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).bind( "touchstart", function (e) {
-    debugger;
-    canvasMouseDownEvent(e);
+    var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID);
+    canvasMouseDownEvent(e, canvasElem);
 });
 
-function canvasMouseMoveEvent(e) {
+function canvasMouseMoveEvent(e, canvasElem) {
     if (g_globalState == null) {//hack
         return;
     }
 
     const layers = g_globalState.interactiveCanvasState.layers;
     const canvasContext = g_globalState.interactiveCanvasState.imageOutlineLayerCanvasContext;
-
-    var canvasMousePosition = getCurrentCanvasMousePosition(e);
+    
+    var canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     g_globalState.interactiveCanvasState.imageOutlineHighlightLayer = getActiveLayerWithCanvasPosition(canvasMousePosition, layers, null);
 
     if (g_globalState == null || g_globalState.activeCanvas != g_globalState.interactiveCanvasState) {
@@ -1631,58 +1631,21 @@ function canvasMouseMoveEvent(e) {
     }
 
     if (g_globalState.isMouseDownAndClickedOnCanvas) {
-        handleMouseMoveOnCanvas(e);
+        handleMouseMoveOnCanvas(e, canvasElem);
     }
 }
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
-    canvasMouseMoveEvent(e);
+    var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID);
+    canvasMouseMoveEvent(e, canvasElem);
 });
 
 $(document).bind( "touchmove", function (e) {
-    canvasMouseMoveEvent(e);
+    var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID);
+    canvasMouseMoveEvent(e, canvasElem);
 });
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mouseup(function (e) {
-    if (g_globalState == null) {
-        return;
-    }
-    //ignore
-});
-
-$("#" + REFERENCE_CANVAS_OVERLAY_ID).mousedown(function (e) {
-    if (g_globalState == null || true) {//hack
-        return;
-    }
-
-    g_globalState.activeCanvas = g_globalState.referenceCanvasState;
-
-    e.preventDefault();
-    g_globalState.isMouseDownAndClickedOnCanvas = true;
-    handleMouseDownOnCanvas(e);
-});
-
-$("#" + REFERENCE_CANVAS_OVERLAY_ID).mousemove(function (e) {
-    if (g_globalState == null || true) {//hack
-        return;
-    }
-
-    const layers = g_globalState.referenceCanvasState.layers;
-    const canvasContext = g_globalState.referenceCanvasState.imageOutlineLayerCanvasContext;
-
-    var canvasMousePosition = getCurrentCanvasMousePosition(e);
-    g_globalState.referenceCanvasState.imageOutlineHighlightLayer = getActiveLayerWithCanvasPosition(canvasMousePosition, layers, null);
-
-    if (g_globalState == null || g_globalState.activeCanvas != g_globalState.referenceCanvasState) {
-        return;
-    }
-
-    if (g_globalState.isMouseDownAndClickedOnCanvas) {
-        handleMouseMoveOnCanvas(e);
-    }
-});
-
-$("#" + REFERENCE_CANVAS_OVERLAY_ID).mouseup(function (e) {
     if (g_globalState == null) {
         return;
     }
@@ -1696,7 +1659,7 @@ function getCurrentPageMousePosition(e) {
     };
 }
 
-function getCurrentCanvasMousePosition(e) {
+function getCurrentCanvasMousePosition(e, canvasElem) {
     if (e.offsetX || e.offsetX === 0) {
         return {
             x: e.offsetX,
@@ -1706,6 +1669,12 @@ function getCurrentCanvasMousePosition(e) {
         return {
             x: e.layerX,
             y: e.layerY
+        };
+    } else if (canvasElem != null) {
+        var rect = canvasElem.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
         };
     } else {
         console.log("Error: Invalid state");
@@ -1735,7 +1704,7 @@ function filterPointsOutsideImage(imageOutline, imageDimensions) {
     return result;
 }
 
-function handleMouseUpCrop(mousePosition, activeLayer) {
+function handleMouseUpCrop(activeLayer) {
 
     var imageOutline = activeLayer.nonTransformedImageOutline;
     var imageDimensions = {
@@ -1753,7 +1722,6 @@ function handleMouseUpCrop(mousePosition, activeLayer) {
 
 function handleMouseUp(e) {
     var pageMousePosition = getCurrentPageMousePosition(e);
-    var canvasMousePosition = getCurrentCanvasMousePosition(e);
     var globalState = g_globalState;
     switch (g_globalState.currentTranformationOperationState) {
         case enum_TransformationOperation.TRANSLATE:
@@ -1766,7 +1734,7 @@ function handleMouseUp(e) {
             break;
         case enum_TransformationOperation.CROP:
             var activeLayer = g_globalState.activeCanvas.activeLayer;
-            handleMouseUpCrop(canvasMousePosition, activeLayer);
+            handleMouseUpCrop(activeLayer);
             break;
         default:
             console.log("ERROR: Invalid state.");
@@ -1941,9 +1909,8 @@ function drawLayerImageOutline(ctx, imageOutlinePolygon) {
     ctx.stroke();
 }
 
-function handleMouseMoveOnCanvas(e) {
-    var canvasMousePosition = getCurrentCanvasMousePosition(e);
-
+function handleMouseMoveOnCanvas(e, canvasElem) {
+    var canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
 
     switch (g_globalState.currentTranformationOperationState) {
         case enum_TransformationOperation.TRANSLATE:
@@ -1989,9 +1956,9 @@ function getActiveLayerWithCanvasPosition(canvasMousePosition, layers, noMatchRe
 
 }
 
-function handleMouseDownOnCanvas(e) {
+function handleMouseDownOnCanvas(e, canvasElem) {
     const pageMousePosition = getCurrentPageMousePosition(e);
-    const canvasMousePosition = getCurrentCanvasMousePosition(e);
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
 
     g_globalState.pageMouseDownPosition = pageMousePosition;
     g_globalState.temporaryAppliedTransformations.transformationCenterPoint = canvasMousePosition;
