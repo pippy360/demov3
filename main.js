@@ -1579,8 +1579,10 @@ $(document).mousemove(function (e) {
 });
 
 $(document).bind( "touchmove", function (e) {
-    var xPos = e.originalEvent.touches[0].pageX;
-    var pageMousePosition = getCurrentPageMousePosition(e);
+    const pageMousePosition = {
+        x: e.originalEvent.touches[0].pageX, 
+        y: e.originalEvent.touches[0].pageY
+    }
     mouseMoveOnDocumentEvent(pageMousePosition);
 });
 
