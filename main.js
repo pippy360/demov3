@@ -1652,11 +1652,10 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
     canvasMouseMoveEvent(canvasMousePosition);
 });
 
-$(document).bind( "touchmove", function (e) {
-    const pageMousePosition = getCurrentPageMousePosition(e);
-    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
-    var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
+$(document).on('touchmove', "#" + INTERACTIVE_CANVAS_OVERLAY_ID, function(e) {
 
+    var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     canvasMouseMoveEvent(canvasMousePosition);
 });
 
