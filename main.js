@@ -1579,7 +1579,7 @@ $(document).mousemove(function (e) {
 });
 
 $(document).bind( "touchmove", function (e) {
-    debugger;
+    var xPos = e.originalEvent.touches[0].pageX;
     var pageMousePosition = getCurrentPageMousePosition(e);
     mouseMoveOnDocumentEvent(pageMousePosition);
 });
@@ -1614,12 +1614,12 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
     canvasMouseDownEvent(pageMousePosition, canvasMousePosition);
 });
 
-$("#" + INTERACTIVE_CANVAS_OVERLAY_ID).bind( "touchstart", function (e) {
+$(document).on('touchstart', "#" + INTERACTIVE_CANVAS_OVERLAY_ID, function(e) {
     e.preventDefault();
-    
+    var xPos = e.originalEvent.touches[0].pageX;
     const pageMousePosition = getCurrentPageMousePosition(e);
-    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);    
     canvasMouseDownEvent(pageMousePosition, canvasMousePosition);
 });
 
