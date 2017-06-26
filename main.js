@@ -1587,14 +1587,23 @@ $(document).bind( "touchmove", function (e) {
     mouseMoveOnDocumentEvent(pageMousePosition);
 });
 
-$(document).mouseup(function (e) {
+function mouseUpEvent() {
     if (g_globalState != null && g_globalState.isMouseDownAndClickedOnCanvas) {
-        handleMouseUp(e);
+        handleMouseUp();
         g_globalState.isMouseDownAndClickedOnCanvas = false;
 
         //FIXME: finish this and extract to method
         var triangleMapArray = draw();
         generateOutputList(triangleMapArray);
+    }
+}
+
+$(document).mouseup(function (e) {
+    mouseUpEvent();
+});
+
+$(document).bind( "touchend", function (e) {
+        mouseUpEvent()
     }
 });
 
@@ -1737,8 +1746,7 @@ function handleMouseUpCrop(activeLayer) {
     }
 }
 
-function handleMouseUp(e) {
-    var pageMousePosition = getCurrentPageMousePosition(e);
+function handleMouseUp() {
     var globalState = g_globalState;
     switch (g_globalState.currentTranformationOperationState) {
         case enum_TransformationOperation.TRANSLATE:
