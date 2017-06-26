@@ -1655,7 +1655,7 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
 });
 
 $(document).on('touchmove', "#" + INTERACTIVE_CANVAS_OVERLAY_ID, function(e) {
-
+    e.preventDefault();
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
     const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     canvasMouseMoveEvent(canvasMousePosition);
