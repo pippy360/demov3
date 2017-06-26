@@ -1567,7 +1567,8 @@ function mouseMoveOnDocumentEvent(e) {
     if (g_globalState != null && g_globalState.isMouseDownAndClickedOnCanvas) {
         g_globalState.referenceImageHighlightedTriangle = null;
         g_globalState.activeCanvas.imageOutlineHighlightLayer = g_globalState.activeCanvas.activeLayer;
-        handleMouseMoveOnDocument(e);
+        var pageMousePosition = getCurrentPageMousePosition(e);
+        handleMouseMoveOnDocument(pageMousePosition);
         draw();
         clearOutputListAndWipeCanvas();
     }
@@ -1864,8 +1865,7 @@ function getCenterPointOfPoly(arr) {
     return [(minX + maxX) /2, (minY + maxY) /2];
 }
 
-function handleMouseMoveOnDocument(e) {
-    var pageMousePosition = getCurrentPageMousePosition(e);
+function handleMouseMoveOnDocument(pageMousePosition) {
     var globalState = g_globalState;
     switch (globalState.currentTranformationOperationState) {
         case enum_TransformationOperation.TRANSLATE:
