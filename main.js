@@ -1673,8 +1673,8 @@ function getCurrentCanvasMousePosition(e, canvasElem) {
     } else if (canvasElem != null) {
         var rect = canvasElem.getBoundingClientRect();
         return {
-            x: e.originalEvent.pageX - rect.left,
-            y: e.originalEvent.pageY - rect.top
+            x: e.originalEvent.changedTouches[0].clientX - rect.left,
+            y: e.originalEvent.changedTouches[0].clientY - rect.top
         };
     } else {
         console.log("Error: Invalid state");
