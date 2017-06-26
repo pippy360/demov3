@@ -1618,8 +1618,10 @@ $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousedown(function (e) {
 
 $(document).on('touchstart', "#" + INTERACTIVE_CANVAS_OVERLAY_ID, function(e) {
     e.preventDefault();
-    var xPos = e.originalEvent.touches[0].pageX;
-    const pageMousePosition = getCurrentPageMousePosition(e);
+    const pageMousePosition = {
+        x: e.originalEvent.touches[0].pageX,
+        y: e.originalEvent.touches[0].pageY
+    };
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
     const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);    
     canvasMouseDownEvent(pageMousePosition, canvasMousePosition);
