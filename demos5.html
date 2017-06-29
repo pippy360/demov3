@@ -269,7 +269,7 @@
             left: -28px;
         }
         body:after{
-            display:none;
+            /*display:none;*/
             content: url('images/fish_1.jpg') url('images/background.jpg') url('images/fish_2.jpg');
         }
     </style>
@@ -315,7 +315,7 @@
             <div class="clickAndDragTitle">
             </div>
             <div id="bigCanvasContainer" class="bigCanvasContainer">
-                <div class="canvasWrapper" style="display: none;">
+                <div class="canvasWrapper" style="">
                     <div class="canvasShadow interactiveCanvasWrapper">
                         <canvas id="queryImageCanvasImageContent" class="canvasBottom" width="280"
                                 height="280"></canvas>
@@ -324,7 +324,7 @@
                         <canvas id="queryImageCanvasHighlightedTriangle" class="canvasClickThrough" width="280" height="280"></canvas>
                     </div>
                 </div>
-                <div class="canvasWrapper" style="display: none;">
+                <div class="canvasWrapper" style="">
                     <div class="canvasShadow referenceCanvasWrapper">
                         <canvas id="databaseImageCanvasImageContent" class="canvasBottom" width="280"
                                 height="280"></canvas>
@@ -348,7 +348,7 @@
                             <canvas class="canvasShadow" id="fragmentCanvas2" height="160" width="160"></canvas>
                         </div>
                     </div>
-                    <canvas id="bigCanvas" width="700" height="300"></canvas>
+                    <canvas id="bigCanvas" width="700" height="700"></canvas>
                 </div>
             </div>
         </div>
@@ -367,7 +367,6 @@
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
 <script src="main5.js"></script>
-
 <script>
 </script>
 </body>
