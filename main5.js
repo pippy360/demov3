@@ -2195,6 +2195,8 @@ function animation7(frame) {
 
     nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
 
+
+        ctx.globalAlpha = percentageDone;
     var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
     var shape = g_globalState.interactiveCanvasState.layers[0].nonTransformedImageOutline;
@@ -2205,7 +2207,7 @@ function animation7(frame) {
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
-        ctx.globalAlpha = percentageDone;
+        
 
     drawKeypoints(ctx, keypoints2, "blue");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
