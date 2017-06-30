@@ -2274,9 +2274,11 @@ function animation8(frame) {
     var shape = g_globalState.interactiveCanvasState.layers[0].nonTransformedImageOutline;
     shape = applyTransformationMatrixToAllKeypointsObjects(shape, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
     keypoints1 = filterKeypointsOutsidePolygon(keypoints1, buildRect(280, 280));
-
+    
     drawKeypoints(ctx, keypoints1, "blue");
+    ctx.globalAlpha = 1.0;
 
+    
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
     drawKeypoints(ctx, keypoints2, "blue");
