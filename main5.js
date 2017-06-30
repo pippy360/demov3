@@ -2322,7 +2322,7 @@ function animation6(frame) {
     var animationFrames = 20*mult;//60*mult
     //now cut the fragment
     animationStart();
-
+    var percentageDone = frame / animationFrames;
     // var percentageDone = frame/animationFrames;
     // var endx = 80;
     // var endy = 80;
@@ -2349,10 +2349,13 @@ function animation6(frame) {
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    ctx.fillStyle = 'rgba(255, 255*(1-percentageDone), 255*(1-percentageDone), 1.0)';
     drawKeypoints(ctx, keypoints2, "blue");
+    
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
-
+    ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+    
 //     ctx.beginPath();
 //     let pt = {};
 //     ctx.strokeStyle = "blue";
