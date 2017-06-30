@@ -2194,25 +2194,90 @@ function animation6(frame) {
     return (frame >= animationFrames);
 }
 
+//fade out
 function animation5(frame) {
-    var animationFrames = 10*mult;
+    var animationFrames = 10 * mult;
 
-    animationStart();
+    draw();
+    var percentageDone = frame / animationFrames;
 
-    var percentageDone = frame/animationFrames;
-    var endx = -20;
-    var endy = 30;
-    g_globalState.temporaryAppliedTransformations.translate = {
-        x: -endx*percentageDone,
-        y: -endy*percentageDone
-    };
+    let imageFragment1;
+    let imageWithWhiteTri1;
+    let shape = g_triangleKeypoints;
+    {
+        let layer1 = g_globalState.referenceCanvasState.layers[0];
+        transformedShape1 = applyTransformationMatrixToAllKeypointsObjects(shape, layer1.appliedTransformations);
+        let referenceCanvas = g_globalState.referenceCanvasState.imageLayerCanvas;
+        let referenceCanvasContext = g_globalState.referenceCanvasState.imageLayerCanvasContext;
+        imageFragment1 = cropLayerImage(referenceCanvas, transformedShape1);
 
-    animationEnd(frame);
+        referenceCanvasContext.beginPath();
+        drawPolygonPath(referenceCanvasContext, transformedShape1);
+        referenceCanvasContext.fillStyle = 'rgba(255, 255, 255, 1.0)';
+        referenceCanvasContext.fill();
+        imageWithWhiteTri1 = referenceCanvas
+    }
+
+    let imageFragment2;
+    let imageWithWhiteTri2;
+    let transformedShape2;
+    {
+        let layer2 = g_globalState.interactiveCanvasState.layers[0];
+        transformedShape2 = applyTransformationMatrixToAllKeypointsObjects(shape, layer2.appliedTransformations);
+        let interactiveCanvas = g_globalState.interactiveCanvasState.imageLayerCanvas;
+        let interactiveCanvasContext = g_globalState.interactiveCanvasState.imageLayerCanvasContext;
+        imageFragment2 = cropLayerImage(interactiveCanvas, transformedShape2);
+
+        interactiveCanvasContext.beginPath();
+        drawPolygonPath(interactiveCanvasContext, transformedShape2);
+        interactiveCanvasContext.fillStyle = 'rgba(255, 255, 255, 1.0)';
+        interactiveCanvasContext.fill();
+
+        imageWithWhiteTri2 = interactiveCanvas
+    }
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+    clearCanvasByContext(ctx);
+    ctx.save();
+    {
+        ctx.globalAlpha = 1.0 - (1.0*percentageDone);
+        ctx.drawImage(imageWithWhiteTri2, 0, 0);
+        ctx.globalAlpha = 1.0;
+        var nk = g_triangleKeypoints;
+        nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+        let mat = calcTransformationMatrixToEquilateralTriangle(nk);
+        mat = matrixMultiply(getTranslateMatrix(0, 280), mat);
+        per = percentageDone;
+        //ctx.transform(1 + ((mat[0][0] - 1) * per), 0 + (mat[1][0] - 0) * per, 0 + (mat[0][1] - 0) * per, 1 + (mat[1][1] - 1) * per, 0 + (mat[0][2] - 0) * per, 0 + (mat[1][2] - 0) * per);
+        // ctx.translate(0, 100);
+
+        ctx.drawImage(imageFragment2, 0, 0);
+    }
+
+    // ctx.drawImage(imageWithWhiteTri1, 0, 0);
+
+    ctx.restore();
+    ctx.save();
+    {
+        ctx.globalAlpha = 1.0 - (1.0*percentageDone);
+        ctx.drawImage(imageWithWhiteTri1, 380, 0);
+        ctx.globalAlpha = 1.0;
+        var nk = g_triangleKeypoints;
+        nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+        let mat = calcTransformationMatrixToEquilateralTriangle(nk);
+        mat = matrixMultiply(getTranslateMatrix(280, 280), mat);
+        per = percentageDone;
+        //ctx.transform(1+((mat[0][0]-1)*per), 0+(mat[1][0]-0)*per, 0+(mat[0][1]-0)*per, 1+(mat[1][1]-1)*per, 0+(mat[0][2]-0)*per, 0+(mat[1][2]-0)*per);
+        // ctx.translate(0, 100);
+        ctx.drawImage(imageFragment1, 380, 0);
+    }
+    ctx.restore();
     return (frame >= animationFrames);
 }
 
 function animation4(frame) {
-    var animationFrames = 20 * mult;
+    var animationFrames = 40 * mult;
 
     draw();
     var percentageDone = frame / animationFrames;
@@ -2258,11 +2323,12 @@ function animation4(frame) {
     clearCanvasByContext(ctx);
     ctx.save();
     {
-    ctx.drawImage(imageWithWhiteTri2, 0, 0);
+    // ctx.drawImage(imageWithWhiteTri2, 0, 0);
     var nk = g_triangleKeypoints;
     nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     let mat = calcTransformationMatrixToEquilateralTriangle(nk);
-    mat = matrixMultiply(getTranslateMatrix(0, 280), mat);
+    let tpt = getCenterPointOfPoly(nk);
+    mat = matrixMultiply(getTranslateMatrix(tpt[0], tpt[1]), mat);
     per = percentageDone;
     ctx.transform(1 + ((mat[0][0] - 1) * per), 0 + (mat[1][0] - 0) * per, 0 + (mat[0][1] - 0) * per, 1 + (mat[1][1] - 1) * per, 0 + (mat[0][2] - 0) * per, 0 + (mat[1][2] - 0) * per);
         // ctx.translate(0, 100);
@@ -2275,15 +2341,16 @@ function animation4(frame) {
     ctx.save();
     {
 
-    ctx.drawImage(imageWithWhiteTri1, 280, 0);
+    // ctx.drawImage(imageWithWhiteTri1, 380, 0);
     var nk = g_triangleKeypoints;
-    nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(280, 0));
+    nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+        let tpt = getCenterPointOfPoly(nk);
     let mat = calcTransformationMatrixToEquilateralTriangle(nk);
-    mat = matrixMultiply(getTranslateMatrix(280, 280), mat);
+    mat = matrixMultiply(getTranslateMatrix(380, 0), mat);
     per = percentageDone;
     ctx.transform(1+((mat[0][0]-1)*per), 0+(mat[1][0]-0)*per, 0+(mat[0][1]-0)*per, 1+(mat[1][1]-1)*per, 0+(mat[0][2]-0)*per, 0+(mat[1][2]-0)*per);
         // ctx.translate(0, 100);
-        ctx.drawImage(imageFragment1, 280, 0);
+        ctx.drawImage(imageFragment1, 380, 0);
     }
     ctx.restore();
     return (frame >= animationFrames);
@@ -2311,7 +2378,6 @@ function animation3(frame) {
 
     drawKeypoints(ctx, nk, "blue");
     ctx.beginPath();
-    debugger;
     let pt = {};
 
     pt = nk[0];
@@ -2402,7 +2468,6 @@ function animation1(frame) {
     ctx.closePath();
     ctx.stroke();
 
-    return (frame >= animationFrames);
     return (frame >= animationFrames);
 }
 
@@ -2585,11 +2650,11 @@ function doAnimations(frame) {
             isDone = animation3(frame-prevAnimationsFrameCount);
             break;
         case 3:
+            isDone = animation5(frame-prevAnimationsFrameCount);
+            break;
+        case 4:
             isDone = animation4(frame-prevAnimationsFrameCount);
             break;
-        // case 4:
-        //     isDone = animation5(frame-prevAnimationsFrameCount);
-        //     break;
         // case 5:
         //     isDone = animation6(frame-prevAnimationsFrameCount);
         //     break;
