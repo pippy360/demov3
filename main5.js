@@ -2552,7 +2552,7 @@ function animation4(frame) {
 }
 
 function animation3(frame) {
-    ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
+ 
     var animationFrames = 60*mult;//60*mult
     //now cut the fragment
     animationStart();
