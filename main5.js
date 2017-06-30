@@ -2552,6 +2552,7 @@ function animation4(frame) {
 }
 
 function animation3(frame) {
+    ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
     var animationFrames = 60*mult;//60*mult
     //now cut the fragment
     animationStart();
@@ -2588,6 +2589,7 @@ function animation3(frame) {
     //move the fragment!!!
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
 
+    ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
     nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
     //drawKeypoints(ctx, nk, "blue");
