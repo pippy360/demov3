@@ -2175,9 +2175,10 @@ var g_triangleKeypoints = [{x: 150, y: 20}, {x: 20, y: 200}, {x: 200, y: 200}];
 
 function animation7(frame) {
     var animationFrames = 60*mult;//60*mult
+    var percentageDone = frame / animationFrames;
     //now cut the fragment
     animationStart();
-
+    ctx.globalAlpha = percentageDone;
     // var percentageDone = frame/animationFrames;
     // var endx = 80;
     // var endy = 80;
@@ -2208,35 +2209,36 @@ function animation7(frame) {
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
 
-    ctx.beginPath();
-    let pt = {};
-    ctx.strokeStyle = "blue";
-    pt = nonTransformedImage[0];
-    ctx.moveTo(pt.x,pt.y);
-    pt = nonTransformedImage[1];
-    ctx.lineTo(pt.x,pt.y);
-    pt = nonTransformedImage[2];
-    ctx.lineTo(pt.x,pt.y);
-    ctx.closePath();
-    ctx.stroke();
+//     ctx.beginPath();
+//     let pt = {};
+//     ctx.strokeStyle = "blue";
+//     pt = nonTransformedImage[0];
+//     ctx.moveTo(pt.x,pt.y);
+//     pt = nonTransformedImage[1];
+//     ctx.lineTo(pt.x,pt.y);
+//     pt = nonTransformedImage[2];
+//     ctx.lineTo(pt.x,pt.y);
+//     ctx.closePath();
+//     ctx.stroke();
 
 
     //move the fragment!!!
     nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
 
-    //drawKeypoints(ctx, nk, "blue");
-    ctx.beginPath();
+//     //drawKeypoints(ctx, nk, "blue");
+//     ctx.beginPath();
 
-    ctx.strokeStyle = "red";
-    pt = nk[0];
-    ctx.moveTo(pt.x,pt.y);
-    pt = nk[1];
-    ctx.lineTo(pt.x,pt.y);
-    pt = nk[2];
-    ctx.lineTo(pt.x,pt.y);
-    ctx.closePath();
-    ctx.stroke();
+//     ctx.strokeStyle = "red";
+//     pt = nk[0];
+//     ctx.moveTo(pt.x,pt.y);
+//     pt = nk[1];
+//     ctx.lineTo(pt.x,pt.y);
+//     pt = nk[2];
+//     ctx.lineTo(pt.x,pt.y);
+//     ctx.closePath();
+//     ctx.stroke();
     //move the fragment!!!
+    ctx.globalAlpha = 1.0;
     return (frame >= animationFrames);
 }
 
