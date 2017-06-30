@@ -2178,7 +2178,6 @@ function animation7(frame) {
     var percentageDone = frame / animationFrames;
     //now cut the fragment
     animationStart();
-    ctx.globalAlpha = percentageDone;
     // var percentageDone = frame/animationFrames;
     // var endx = 80;
     // var endy = 80;
@@ -2189,6 +2188,8 @@ function animation7(frame) {
 
     var canvas = document.getElementById('bigCanvas'),
         ctx = canvas.getContext('2d');
+        ctx.globalAlpha = percentageDone;
+
     animationEnd(frame);
 
     var nk = g_triangleKeypoints;
