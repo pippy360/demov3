@@ -2451,7 +2451,8 @@ function animation3(frame) {
 
     //move the fragment!!!
     nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
-
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+    drawKeypoints(ctx, nk2, "blue");
     //drawKeypoints(ctx, nk, "blue");
     ctx.beginPath();
 
