@@ -2188,7 +2188,6 @@ function animation7(frame) {
 
     var canvas = document.getElementById('bigCanvas'),
         ctx = canvas.getContext('2d');
-        ctx.globalAlpha = percentageDone;
 
     animationEnd(frame);
 
@@ -2206,9 +2205,12 @@ function animation7(frame) {
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+        ctx.globalAlpha = percentageDone;
+
     drawKeypoints(ctx, keypoints2, "blue");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
+        ctx.globalAlpha = 1;
 
 //     ctx.beginPath();
 //     let pt = {};
