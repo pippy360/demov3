@@ -2247,6 +2247,75 @@ function animation7(frame) {
     return (frame >= animationFrames);
 }
 
+function animation8(frame) {
+    var animationFrames = 60*mult;//60*mult
+    var percentageDone = frame / animationFrames;
+    //now cut the fragment
+    animationStart();
+
+    // var percentageDone = frame/animationFrames;
+    // var endx = 80;
+    // var endy = 80;
+    // g_globalState.temporaryAppliedTransformations.translate = {
+    //     x: -endx*percentageDone,
+    //     y: -endy*percentageDone
+    // };
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+    animationEnd(frame);
+
+    var nk = g_triangleKeypoints;
+
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    ctx.globalAlpha = 1.0 - percentageDone;
+    var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    var shape = g_globalState.interactiveCanvasState.layers[0].nonTransformedImageOutline;
+    shape = applyTransformationMatrixToAllKeypointsObjects(shape, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    keypoints1 = filterKeypointsOutsidePolygon(keypoints1, buildRect(280, 280));
+
+    drawKeypoints(ctx, keypoints1, "blue");
+
+    var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    drawKeypoints(ctx, keypoints2, "blue");
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+    drawKeypoints(ctx, nk2, "blue");
+
+//     ctx.beginPath();
+//     let pt = {};
+//     ctx.strokeStyle = "blue";
+//     pt = nonTransformedImage[0];
+//     ctx.moveTo(pt.x,pt.y);
+//     pt = nonTransformedImage[1];
+//     ctx.lineTo(pt.x,pt.y);
+//     pt = nonTransformedImage[2];
+//     ctx.lineTo(pt.x,pt.y);
+//     ctx.closePath();
+//     ctx.stroke();
+
+
+    //move the fragment!!!
+    nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+
+//     //drawKeypoints(ctx, nk, "blue");
+//     ctx.beginPath();
+
+//     ctx.strokeStyle = "red";
+//     pt = nk[0];
+//     ctx.moveTo(pt.x,pt.y);
+//     pt = nk[1];
+//     ctx.lineTo(pt.x,pt.y);
+//     pt = nk[2];
+//     ctx.lineTo(pt.x,pt.y);
+//     ctx.closePath();
+//     ctx.stroke();
+    //move the fragment!!!
+    ctx.globalAlpha = 1.0;
+    return (frame >= animationFrames);
+}
+
 function animation6(frame) {
     var animationFrames = 60*mult;//60*mult
     //now cut the fragment
@@ -2790,16 +2859,21 @@ function doAnimations(frame) {
             isDone = animation7(frame-prevAnimationsFrameCount);
             break;
         case 3:
-            //show the red keypoints
+            //show keypoints
             isDone = animation6(frame-prevAnimationsFrameCount);
             break;
         case 4:
-            isDone = animation3(frame-prevAnimationsFrameCount);
+            //fade out keypoints
+            isDone = animation8(frame-prevAnimationsFrameCount);
             break;
         case 5:
-            isDone = animation5(frame-prevAnimationsFrameCount);
+            //draw the line
+            isDone = animation3(frame-prevAnimationsFrameCount);
             break;
         case 6:
+            isDone = animation5(frame-prevAnimationsFrameCount);
+            break;
+        case 7:
             isDone = animation4(frame-prevAnimationsFrameCount);
             break;
         // case 5:
