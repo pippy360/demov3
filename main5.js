@@ -2416,7 +2416,7 @@ function animation4(frame) {
 }
 
 function animation3(frame) {
-    var animationFrames = 300*mult;//60*mult
+    var animationFrames = 60*mult;//60*mult
     //now cut the fragment
     animationStart();
 
