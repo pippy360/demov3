@@ -2248,7 +2248,7 @@ function animation7(frame) {
 }
 
 function animation8(frame) {
-    var animationFrames = 60*mult;//60*mult
+    var animationFrames = 120*mult;//60*mult
     var percentageDone = frame / animationFrames;
     //now cut the fragment
     animationStart();
@@ -2283,7 +2283,7 @@ function animation8(frame) {
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
     drawKeypoints(ctx, keypoints2, "blue");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
-    drawKeypoints(ctx, nk2, "blue");
+    drawKeypoints(ctx, nk2, "red");
 
 //     ctx.beginPath();
 //     let pt = {};
@@ -2551,9 +2551,50 @@ function animation4(frame) {
     return (frame >= animationFrames);
 }
 
+function calcPerimeterOfTriangle(triangle) {
+    return getEuclideanDistance(triangle[0], triangle[1])
+        + getEuclideanDistance(triangle[1], triangle[2])
+        + getEuclideanDistance(triangle[2], triangle[0]);
+
+}
+
+function drawTheTriangle(ctx, percentageDone, triangle) {
+    var nonTransformedImage = triangle;
+    var totalDist = calcPerimeterOfTriangle(nonTransformedImage);
+
+    var distDrawnSoFar = 0;
+    var prevPoint = nonTransformedImage[2];
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+
+    ctx.moveTo(nonTransformedImage[2].x, nonTransformedImage[2].y);
+    for (var i = 0; i < 3; i++) {
+        var currPoint = nonTransformedImage[i];
+        //should we draw this side?
+        var nextDist = getEuclideanDistance(prevPoint, currPoint);
+        if (distDrawnSoFar + nextDist <= totalDist * percentageDone) {
+            //draw the whole thing
+            ctx.lineTo(currPoint.x, currPoint.y);
+        } else {
+            //how much percentage isn't taken up
+            var distPer = ((totalDist*percentageDone)-distDrawnSoFar)/nextDist;
+            var remaining = distPer;
+            if (remaining < 0) {
+                //don't draw any of this line
+            } else {
+                ctx.lineTo(prevPoint.x + ((currPoint.x-prevPoint.x)*remaining), prevPoint.y + ((currPoint.y-prevPoint.y)*remaining));
+            }
+        }
+        distDrawnSoFar += nextDist;//not accurate but doesn't matter
+        prevPoint = currPoint;
+    }
+
+    ctx.stroke();
+}
 function animation3(frame) {
  
-    var animationFrames = 60*mult;//60*mult
+    var animationFrames = 240*mult;//60*mult
+    var percentageDone = frame/animationFrames;
     //now cut the fragment
     animationStart();
 
@@ -2572,18 +2613,7 @@ function animation3(frame) {
     var nk = g_triangleKeypoints;
 
     nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
-
-    ctx.beginPath();
-    let pt = {};
-    ctx.strokeStyle = "red";
-    pt = nonTransformedImage[0];
-    ctx.moveTo(pt.x,pt.y);
-    pt = nonTransformedImage[1];
-    ctx.lineTo(pt.x,pt.y);
-    pt = nonTransformedImage[2];
-    ctx.lineTo(pt.x,pt.y);
-    ctx.closePath();
-    ctx.stroke();
+    drawTheTriangle(ctx, percentageDone, nonTransformedImage);
 
 
     //move the fragment!!!
@@ -2591,20 +2621,11 @@ function animation3(frame) {
 
     ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
     nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
-    drawKeypoints(ctx, nk2, "blue");
+    drawKeypoints(ctx, nk2, "red");
     //drawKeypoints(ctx, nk, "blue");
     ctx.beginPath();
 
-    ctx.strokeStyle = "red";
-    pt = nk[0];
-    ctx.moveTo(pt.x,pt.y);
-    pt = nk[1];
-    ctx.lineTo(pt.x,pt.y);
-    pt = nk[2];
-    ctx.lineTo(pt.x,pt.y);
-    ctx.closePath();
-    ctx.stroke();
-    //move the fragment!!!
+    drawTheTriangle(ctx, percentageDone, nk);
     return (frame >= animationFrames);
 }
 
