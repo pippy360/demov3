@@ -2212,6 +2212,8 @@ function animation7(frame) {
     drawKeypoints(ctx, keypoints2, "blue");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    drawKeypoints(ctx, nk2, "blue");
         ctx.globalAlpha = 1;
 
 //     ctx.beginPath();
@@ -2276,12 +2278,16 @@ function animation8(frame) {
     keypoints1 = filterKeypointsOutsidePolygon(keypoints1, buildRect(280, 280));
     ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
     drawKeypoints(ctx, keypoints1, "blue");
-    ctx.globalAlpha = 1.0;
 
     ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
     drawKeypoints(ctx, keypoints2, "blue");
+    ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
+    nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    ctx.globalAlpha = 1.0;
+    drawKeypoints(ctx, nk3, "red");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "red");
 
@@ -2320,7 +2326,7 @@ function animation8(frame) {
 }
 
 function animation6(frame) {
-    var animationFrames = 20*mult;//60*mult
+    var animationFrames = 80*mult;//60*mult
     //now cut the fragment
     animationStart();
     var percentageDone = frame / animationFrames;
@@ -2350,11 +2356,17 @@ function animation6(frame) {
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
-    ctx.fillStyle = 'rgba(255, 255*(1-percentageDone), 255*(1-percentageDone), 1.0)';
+    debugger;
     drawKeypoints(ctx, keypoints2, "blue");
-    
+
+    var fillStr = 'rgba(255,'+ parseInt(255*(1-percentageDone)) +', ' + parseInt(255*(1-percentageDone)) +', 1.0)';
+    debugger;
+
+    ctx.fillStyle = fillStr;
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    drawKeypoints(ctx, nk2, fillStr);
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
-    drawKeypoints(ctx, nk2, "blue");
+    drawKeypoints(ctx, nk2, fillStr);
     ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
     
 //     ctx.beginPath();
@@ -2370,8 +2382,6 @@ function animation6(frame) {
 //     ctx.stroke();
 
 
-    //move the fragment!!!
-    nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
 
 //     //drawKeypoints(ctx, nk, "blue");
 //     ctx.beginPath();
@@ -2591,6 +2601,7 @@ function drawTheTriangle(ctx, percentageDone, triangle) {
 
     ctx.stroke();
 }
+
 function animation3(frame) {
  
     var animationFrames = 240*mult;//60*mult
@@ -2620,12 +2631,12 @@ function animation3(frame) {
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
 
     ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
-    nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+    nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
     drawKeypoints(ctx, nk2, "red");
-    //drawKeypoints(ctx, nk, "blue");
+    drawKeypoints(ctx, nk, "red");
     ctx.beginPath();
 
-    drawTheTriangle(ctx, percentageDone, nk);
+    drawTheTriangle(ctx, percentageDone, nk2);
     return (frame >= animationFrames);
 }
 
