@@ -2452,7 +2452,10 @@ function animation5(frame) {
         ctx.globalAlpha = 1.0;
         var nk = g_triangleKeypoints;
         nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+        var fillStr = 'rgba(255, 0 ,0 , 1.0)';
+        ctx.strokeStyle = fillStr;
         drawTheTriangle(ctx, 100, nk);
+        drawKeypoints(ctx, nk, fillStr);
         let mat = calcTransformationMatrixToEquilateralTriangle(nk);
         mat = matrixMultiply(getTranslateMatrix(0, 280), mat);
         per = percentageDone;
@@ -2472,7 +2475,10 @@ function animation5(frame) {
         ctx.globalAlpha = 1.0;
         var nk = g_triangleKeypoints;
         nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+        var fillStr = 'rgba(255, 0 ,0 , 1.0)';
+        ctx.strokeStyle = fillStr;
         drawTheTriangle(ctx, 100, nk);
+        drawKeypoints(ctx, nk, fillStr);
         let mat = calcTransformationMatrixToEquilateralTriangle(nk);
         mat = matrixMultiply(getTranslateMatrix(280, 280), mat);
         per = percentageDone;
@@ -2485,6 +2491,7 @@ function animation5(frame) {
 }
 
 function animation4(frame) {
+    console.log("final transform of frag");
     var animationFrames = 40 * mult;
 
     draw();
@@ -2531,25 +2538,32 @@ function animation4(frame) {
     clearCanvasByContext(ctx);
     ctx.save();
     {
-    // ctx.drawImage(imageWithWhiteTri2, 0, 0);
-    var nk = g_triangleKeypoints;
-    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
-    //drawTheTriangle(ctx, 100, nk);
-    let mat = calcTransformationMatrixToEquilateralTriangle(nk2);
-    mat = matrixMultiply(getTranslateMatrix(70, 100), mat);
-    per = percentageDone;
-        nk = applyTransformationMatrixToAllKeypointsObjects(nk, [
+        // ctx.drawImage(imageWithWhiteTri2, 0, 0);
+        var nk = g_triangleKeypoints;
+        nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+        //drawTheTriangle(ctx, 100, nk);
+        let mat = calcTransformationMatrixToEquilateralTriangle(nk2);
+        mat = matrixMultiply(getTranslateMatrix(70, 100), mat);
+        per = percentageDone;
+        var transMat = [
             [1+((mat[0][0]-1)*per), 0+(mat[0][1]-0)*per, 0+(mat[0][2]-0)*per],
-            [0+(mat[1][0]-0)*per,   1+(mat[1][1]-1)*per, 0+(mat[1][2]-0)*per]
-                [0, 0, 1]
-        ]);
-        drawTheTriangle(ctx, 100, nk);
+            [0+(mat[1][0]-0)*per,   1+(mat[1][1]-1)*per, 0+(mat[1][2]-0)*per],
+            [0, 0, 1]
+        ]
+        nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+        nk3 = applyTransformationMatrixToAllKeypointsObjects(nk3, transMat);
+        var fillStr = 'rgba(255, 255, 255, ' + (1.0 - (percentageDone/2)) + ')';
+        ctx.strokeStyle = fillStr;
+        ctx.fillStyle = fillStr;
+        drawTheTriangle(ctx, 100, nk3, fillStr);
+        drawKeypoints(ctx, nk3, fillStr);
+
         ctx.save();
         ctx.transform(1 + ((mat[0][0] - 1) * per), 0 + (mat[1][0] - 0) * per, 0 + (mat[0][1] - 0) * per, 1 + (mat[1][1] - 1) * per, 0 + (mat[0][2] - 0) * per, 0 + (mat[1][2] - 0) * per);
         // ctx.translate(0, 100);
         ctx.drawImage(imageFragment2, 0, 0);
         ctx.restore();
-        drawTheTriangle(ctx, 100, nk);
+        //drawTheTriangle(ctx, 100, nk3);
     }
 
     // ctx.drawImage(imageWithWhiteTri1, 0, 0);
@@ -2566,18 +2580,22 @@ function animation4(frame) {
         per = percentageDone;
         var transMat = [
             [1+((mat[0][0]-1)*per), 0+(mat[0][1]-0)*per, 0+(mat[0][2]-0)*per],
-            [0+(mat[1][0]-0)*per,   1+(mat[1][1]-1)*per, 0+(mat[1][2]-0)*per]
+            [0+(mat[1][0]-0)*per,   1+(mat[1][1]-1)*per, 0+(mat[1][2]-0)*per],
                 [0, 0, 1]
         ];
-        debugger;
+        nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
         nk = applyTransformationMatrixToAllKeypointsObjects(nk, transMat);
-        drawTheTriangle(ctx, 100, nk);
+        var fillStr = 'rgba(255, 255, 255, ' + (1.0 - (percentageDone/2)) + ')';
+        ctx.strokeStyle = fillStr;
+        ctx.fillStyle = fillStr;
+        drawTheTriangle(ctx, 100, nk, fillStr);
+        drawKeypoints(ctx, nk, fillStr);
         ctx.save();
         ctx.transform(1+((mat[0][0]-1)*per), 0+(mat[1][0]-0)*per, 0+(mat[0][1]-0)*per, 1+(mat[1][1]-1)*per, 0+(mat[0][2]-0)*per, 0+(mat[1][2]-0)*per);
         // ctx.translate(0, 100);
         ctx.drawImage(imageFragment1, 380, 0);
         ctx.restore();
-        drawTheTriangle(ctx, 100, nk);
+        // drawTheTriangle(ctx, 100, nk);
     }
     ctx.restore();
     return (frame >= animationFrames);
@@ -2590,14 +2608,14 @@ function calcPerimeterOfTriangle(triangle) {
 
 }
 
-function drawTheTriangle(ctx, percentageDone, triangle) {
+function drawTheTriangle(ctx, percentageDone, triangle, strokeStyle) {
     var nonTransformedImage = triangle;
     var totalDist = calcPerimeterOfTriangle(nonTransformedImage);
 
     var distDrawnSoFar = 0;
     var prevPoint = nonTransformedImage[2];
     ctx.beginPath();
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = (strokeStyle)? strokeStyle : "red";
 
     ctx.moveTo(nonTransformedImage[2].x, nonTransformedImage[2].y);
     for (var i = 0; i < 3; i++) {
@@ -2934,6 +2952,7 @@ function doAnimations(frame) {
             isDone = animation3(frame-prevAnimationsFrameCount);
             break;
         case 6:
+            //fade out image
             isDone = animation5(frame-prevAnimationsFrameCount);
             break;
         case 7:
