@@ -870,6 +870,8 @@ function drawTriangleWithColour(ctx, tri, strokeColour, fillColour, enableFill) 
 }
 
 function drawKeypoints(interactiveCanvasContext, keypoints, colourString) {
+    var backUpWidth = interactiveCanvasContext.lineWidth;
+    interactiveCanvasContext.lineWidth = 2;
     if(colourString) {
         interactiveCanvasContext.strokeStyle = colourString;
     } else {
@@ -887,6 +889,7 @@ function drawKeypoints(interactiveCanvasContext, keypoints, colourString) {
     }
     interactiveCanvasContext.closePath();
     interactiveCanvasContext.stroke();
+    interactiveCanvasContext.lineWidth = backUpWidth;
 }
 
 function drawTriangle(ctx, tri, colour) {
@@ -2624,6 +2627,7 @@ function animation3(frame) {
     var nk = g_triangleKeypoints;
 
     nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    ctx.lineWidth = 3;
     drawTheTriangle(ctx, percentageDone, nonTransformedImage);
 
 
