@@ -1236,6 +1236,7 @@ function drawImageOutlineWithLayer(canvasContext, layer) {
 function clearCanvasByContext(context) {
     var canvas = context.canvas;
     context.clearRect(0, 0, canvas.width, canvas.height);
+
 }
 
 function drawImageOutlineInternal() {
@@ -2182,6 +2183,8 @@ function repeatTheLastFrame(frame) {
     console.log("final transform of frag");
     var animationFrames = 40 * mult;
 
+    animationStart();
+
     draw();
     var percentageDone = frame / animationFrames;
 
@@ -2224,6 +2227,8 @@ function repeatTheLastFrame(frame) {
     var canvas = document.getElementById('bigCanvas'),
         ctx = canvas.getContext('2d');
     clearCanvasByContext(ctx);
+    paintCanvasWhite(ctx);
+
     ctx.save();
     {
         // ctx.drawImage(imageWithWhiteTri2, 0, 0);
@@ -2292,6 +2297,9 @@ function repeatTheLastFrame(frame) {
         ctx.fillText("Step 4: Hash the \"fixed\" fragments and lookup",10,380);
         ctx.fillText("hash in database",115,410);
     }
+
+    sendImage()
+    return (frame >= animationFrames);
 }
 
 function fadeInKeypoints(frame) {
@@ -2345,6 +2353,7 @@ function fadeInKeypoints(frame) {
         ctx.fillText("keypoints and select 3 keypoints",115,410);
 
     }
+    sendImage()
 
     return (frame >= animationFrames);
 }
@@ -2399,11 +2408,14 @@ function animation8(frame) {
         ctx.fillText("Step 2: Compute affine transformation-invariant",10,380);
         ctx.fillText("keypoints and select 3 keypoints",115,410);
     }
+
+    sendImage()
+
     return (frame >= animationFrames);
 }
 
 function animation6(frame) {
-    var animationFrames = 240*mult;//60*mult
+    var animationFrames = 60*mult;//60*mult
     //now cut the fragment
     animationStart();
     var percentageDone = frame / animationFrames;
@@ -2451,11 +2463,15 @@ function animation6(frame) {
         ctx.fillText("Step 2: Compute affine transformation-invariant",10,380);
         ctx.fillText("keypoints and select 3 keypoints",115,410);
     }
+
+    sendImage()
+
     return (frame >= animationFrames);
 }
 
 //fade out
 function animation5(frame) {
+    animationStart();
     var animationFrames = 10 * mult;
 
     draw();
@@ -2499,6 +2515,8 @@ function animation5(frame) {
     var canvas = document.getElementById('bigCanvas'),
         ctx = canvas.getContext('2d');
     clearCanvasByContext(ctx);
+    paintCanvasWhite(ctx);
+
     ctx.save();
     {
         ctx.globalAlpha = 1.0 - (1.0*percentageDone);
@@ -2549,12 +2567,16 @@ function animation5(frame) {
     }
     var fillStr = 'rgba(255, 255, 255, 1.0)';
     ctx.fillStyle = fillStr;
+
+    sendImage()
+
     return (frame >= animationFrames);
 }
 
 function animation4(frame) {
     console.log("final transform of frag");
     var animationFrames = 40 * mult;
+    animationStart();
 
     draw();
     var percentageDone = frame / animationFrames;
@@ -2598,6 +2620,8 @@ function animation4(frame) {
     var canvas = document.getElementById('bigCanvas'),
         ctx = canvas.getContext('2d');
     clearCanvasByContext(ctx);
+    paintCanvasWhite(ctx);
+
     ctx.save();
     {
         // ctx.drawImage(imageWithWhiteTri2, 0, 0);
@@ -2665,6 +2689,9 @@ function animation4(frame) {
         ctx.fillStyle = "black";
         ctx.fillText("Step 3: Extract fragment and \"fix\" rotation and scale",10,380);
     }
+
+    sendImage()
+
     return (frame >= animationFrames);
 }
 
@@ -2711,7 +2738,7 @@ function drawTheTriangle(ctx, percentageDone, triangle, strokeStyle) {
 
 function animation3(frame) {
  
-    var animationFrames = 240*mult;//60*mult
+    var animationFrames = 120*mult;//60*mult
     var percentageDone = frame/animationFrames;
     //now cut the fragment
     animationStart();
@@ -2751,6 +2778,9 @@ function animation3(frame) {
         ctx.fillStyle = "black";
         ctx.fillText("Step 3: Extract fragment and \"fix\" rotation and scale",10,380);
     }
+
+    sendImage()
+
     return (frame >= animationFrames);
 }
 
@@ -2786,6 +2816,7 @@ function transformTheWholeFirstImage(frame) {
         ctx.fillStyle = "black";
         ctx.fillText("Step 1: Apply 2d affine transformation to image",10,380);
     }
+    sendImage()
 
     return (frame >= animationFrames);
 }
@@ -2816,7 +2847,7 @@ function doNothingForTheFirstFewFrames(frame) {
         ctx.fillStyle = "black";
         ctx.fillText("Step 1: Apply 2d affine transformation to image",10,380);
     }
-
+    sendImage()
     return (frame >= animationFrames);
 }
 
@@ -2910,6 +2941,40 @@ function drawAllImagesToCanvasAndSend(g_frame) {
 //        });
 }
 
+function sendImage() {
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+
+    var image1 = canvas.toDataURL('image/jpeg', 0.92).replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+//
+    var regex = /^data:.+\/(.+);base64,(.*)$/;
+    var matches;
+    matches = image1.match(regex);
+    var data1 = matches[2];
+
+    var info = {
+        'image1': {
+            'imageData': data1,
+            'frameNumber': g_frame
+        }
+    };
+
+    $.ajax({
+        url: 'http://127.0.0.1/runTestWithJsonData',
+        type: 'POST',
+        data: JSON.stringify(info),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        async: true,
+        success: function (msg) {
+            console.log(msg);
+        },
+        error: function (msg) {
+            console.log(msg);
+        }
+    });
+}
+
 function addToX(transformedShape2, number) {
     for (var i = 0; i < transformedShape2.length; i++) {
         transformedShape2[i].x += number;
@@ -2933,53 +2998,7 @@ function animationEnd(frame) {
     wipeTemporaryAppliedTransformations();
     drawAllImagesToCanvasAndSend(g_frame);
     draw();
-    var canvas = document.getElementById('bigCanvas'),
-        ctx = canvas.getContext('2d');
 
-       var trans = g_globalState.interactiveCanvasState.layers[0].appliedTransformations;
-       ctx.strokeStyle = 'rgba(255,0,0,.03)';
-       ctx.lineWidth = 1;
-       var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-
-       //var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-       var keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, trans);
-        keypoints1 = addToX2(keypoints1, 380);
-        //drawKeypoints(ctx, keypoints1);
-       var imageOutline = g_globalState.referenceCanvasState.layers[0].nonTransformedImageOutline;
-       imageOutline = applyTransformationToImageOutline(imageOutline, trans);
-       keypoints2 = filterKeypointsOutsidePolygon(keypoints2, imageOutline);
-       keypoints2 = filterKeypointsOutsidePolygon(keypoints2, buildRect(280, 280));
-       //drawKeypoints(ctx, keypoints2);
-
-
-//        var image1 = canvas.toDataURL('image/jpeg', 0.92).replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
-////
-//        var regex = /^data:.+\/(.+);base64,(.*)$/;
-//        var matches;
-//        matches = image1.match(regex);
-//        var data1 = matches[2];
-//
-//        var info = {
-//            'image1': {
-//                'imageData': data1,
-//                'frameNumber': g_frame
-//            }
-//        };
-//
-//        $.ajax({
-//            url: 'http://127.0.0.1/runTestWithJsonData',
-//            type: 'POST',
-//            data: JSON.stringify(info),
-//            contentType: 'application/json; charset=utf-8',
-//            dataType: 'json',
-//            async: true,
-//            success: function (msg) {
-//                console.log(msg);
-//            },
-//            error: function (msg) {
-//                console.log(msg);
-//            }
-//        });
 
 }
 
