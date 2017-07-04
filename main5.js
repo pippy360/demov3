@@ -2181,7 +2181,7 @@ var g_triangleKeypoints = [{x: 150, y: 20}, {x: 20, y: 200}, {x: 200, y: 200}];
 
 function repeatTheLastFrame(frame) {
     console.log("final transform of frag");
-    var animationFrames = 40 * mult;
+    var animationFrames = 180 * mult;
 
     animationStart();
 
@@ -2303,7 +2303,7 @@ function repeatTheLastFrame(frame) {
 }
 
 function fadeInKeypoints(frame) {
-    var animationFrames = 120*mult;//60*mult
+    var animationFrames = 20*mult;//60*mult
     var percentageDone = frame / animationFrames;
     //now cut the fragment
     animationStart();
@@ -2358,8 +2358,121 @@ function fadeInKeypoints(frame) {
     return (frame >= animationFrames);
 }
 
+function repeatShowingPlainKeypoints(frame) {
+    var animationFrames = 120*mult;//60*mult
+    var percentageDone = frame / animationFrames;
+    //now cut the fragment
+    animationStart();
+    // var percentageDone = frame/animationFrames;
+    // var endx = 80;
+    // var endy = 80;
+    // g_globalState.temporaryAppliedTransformations.translate = {
+    //     x: -endx*percentageDone,
+    //     y: -endy*percentageDone
+    // };
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+
+    animationEnd(frame);
+
+    var nk = g_triangleKeypoints;
+
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+
+
+    ctx.globalAlpha = 1;
+    var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    var shape = g_globalState.interactiveCanvasState.layers[0].nonTransformedImageOutline;
+    shape = applyTransformationMatrixToAllKeypointsObjects(shape, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    keypoints1 = filterKeypointsOutsidePolygon(keypoints1, buildRect(280, 280));
+
+    drawKeypoints(ctx, keypoints1, "blue");
+
+    var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+
+
+    drawKeypoints(ctx, keypoints2, "blue");
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+    drawKeypoints(ctx, nk2, "blue");
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    drawKeypoints(ctx, nk2, "blue");
+    ctx.globalAlpha = 1;
+    ctx.globalAlpha = 1.0;
+
+    if (g_showText) {
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Step 2: Compute affine transformation-invariant",10,380);
+        ctx.fillText("keypoints and select 3 keypoints",115,410);
+
+    }
+    sendImage()
+
+    return (frame >= animationFrames);
+}
+
+function showJustRedKeypoints(frame) {
+    var animationFrames = 20*mult;//60*mult
+    var percentageDone = frame / animationFrames;
+    //now cut the fragment
+    animationStart();
+
+    // var percentageDone = frame/animationFrames;
+    // var endx = 80;
+    // var endy = 80;
+    // g_globalState.temporaryAppliedTransformations.translate = {
+    //     x: -endx*percentageDone,
+    //     y: -endy*percentageDone
+    // };
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+    animationEnd(frame);
+
+    var nk = g_triangleKeypoints;
+
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    ctx.globalAlpha = 0.0;
+    var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    var shape = g_globalState.interactiveCanvasState.layers[0].nonTransformedImageOutline;
+    shape = applyTransformationMatrixToAllKeypointsObjects(shape, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    keypoints1 = filterKeypointsOutsidePolygon(keypoints1, buildRect(280, 280));
+    ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+    drawKeypoints(ctx, keypoints1, "blue");
+
+    var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    // ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+    drawKeypoints(ctx, keypoints2, "blue");
+    ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
+    nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    ctx.globalAlpha = 1.0;
+    drawKeypoints(ctx, nk3, "red");
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+    drawKeypoints(ctx, nk2, "red");
+
+    ctx.globalAlpha = 1.0;
+    ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+
+    if (g_showText){
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Step 2: Compute affine transformation-invariant",10,380);
+        ctx.fillText("keypoints and select 3 keypoints",115,410);
+    }
+
+    sendImage()
+
+    return (frame >= animationFrames);
+}
+
+
 function animation8(frame) {
-    var animationFrames = 60*mult;//60*mult
+    var animationFrames = 20*mult;//60*mult
     var percentageDone = frame / animationFrames;
     //now cut the fragment
     animationStart();
@@ -2414,8 +2527,64 @@ function animation8(frame) {
     return (frame >= animationFrames);
 }
 
+function showRedKeypointsAndOtherKeypoints(frame) {
+    var animationFrames = 30*mult;//60*mult
+    //now cut the fragment
+    animationStart();
+    var percentageDone = frame / animationFrames;
+    // var percentageDone = frame/animationFrames;
+    // var endx = 80;
+    // var endy = 80;
+    // g_globalState.temporaryAppliedTransformations.translate = {
+    //     x: -endx*percentageDone,
+    //     y: -endy*percentageDone
+    // };
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+    animationEnd(frame);
+
+    var nk = g_triangleKeypoints;
+
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+
+    var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    var shape = g_globalState.interactiveCanvasState.layers[0].nonTransformedImageOutline;
+    shape = applyTransformationMatrixToAllKeypointsObjects(shape, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
+    keypoints1 = filterKeypointsOutsidePolygon(keypoints1, buildRect(280, 280));
+
+    drawKeypoints(ctx, keypoints1, "blue");
+
+    var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    drawKeypoints(ctx, keypoints2, "blue");
+
+    var fillStr = 'rgba(255,'+ parseInt(255*(0)) +', ' + parseInt(255*(0)) +', 1.0)';
+
+    ctx.fillStyle = fillStr;
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    fillStr = 'rgba('+ parseInt(255*(1)) +',0,'+ parseInt(255*(0)) +', 1.0)';
+    drawKeypoints(ctx, nk2, fillStr);
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+    drawKeypoints(ctx, nk2, fillStr);
+    ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
+
+    if (g_showText){
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Step 2: Compute affine transformation-invariant",10,380);
+        ctx.fillText("keypoints and select 3 keypoints",115,410);
+    }
+
+    sendImage()
+
+    return (frame >= animationFrames);
+}
+
+
 function animation6(frame) {
-    var animationFrames = 60*mult;//60*mult
+    var animationFrames = 30*mult;//60*mult
     //now cut the fragment
     animationStart();
     var percentageDone = frame / animationFrames;
@@ -2468,6 +2637,113 @@ function animation6(frame) {
 
     return (frame >= animationFrames);
 }
+
+//repeat frame
+function repeatFrameBeforeFinalTransform(frame) {
+    animationStart();
+    var animationFrames = 30 * mult;
+
+    draw();
+    var percentageDone = frame / animationFrames;
+
+    let imageFragment1;
+    let imageWithWhiteTri1;
+    let shape = g_triangleKeypoints;
+    {
+        let layer1 = g_globalState.referenceCanvasState.layers[0];
+        transformedShape1 = applyTransformationMatrixToAllKeypointsObjects(shape, layer1.appliedTransformations);
+        let referenceCanvas = g_globalState.referenceCanvasState.imageLayerCanvas;
+        let referenceCanvasContext = g_globalState.referenceCanvasState.imageLayerCanvasContext;
+        imageFragment1 = cropLayerImage(referenceCanvas, transformedShape1);
+
+        referenceCanvasContext.beginPath();
+        drawPolygonPath(referenceCanvasContext, transformedShape1);
+        referenceCanvasContext.fillStyle = 'rgba(255, 255, 255, 1.0)';
+        referenceCanvasContext.fill();
+        imageWithWhiteTri1 = referenceCanvas
+    }
+
+    let imageFragment2;
+    let imageWithWhiteTri2;
+    let transformedShape2;
+    {
+        let layer2 = g_globalState.interactiveCanvasState.layers[0];
+        transformedShape2 = applyTransformationMatrixToAllKeypointsObjects(shape, layer2.appliedTransformations);
+        let interactiveCanvas = g_globalState.interactiveCanvasState.imageLayerCanvas;
+        let interactiveCanvasContext = g_globalState.interactiveCanvasState.imageLayerCanvasContext;
+        imageFragment2 = cropLayerImage(interactiveCanvas, transformedShape2);
+
+        interactiveCanvasContext.beginPath();
+        drawPolygonPath(interactiveCanvasContext, transformedShape2);
+        interactiveCanvasContext.fillStyle = 'rgba(255, 255, 255, 1.0)';
+        interactiveCanvasContext.fill();
+
+        imageWithWhiteTri2 = interactiveCanvas
+    }
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+    clearCanvasByContext(ctx);
+    paintCanvasWhite(ctx);
+
+    ctx.save();
+    {
+        ctx.globalAlpha = 0.0;
+        ctx.drawImage(imageWithWhiteTri2, 0, 0);
+        ctx.globalAlpha = 1.0;
+        var nk = g_triangleKeypoints;
+        nk = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
+        var fillStr = 'rgba(255, 0 ,0 , 1.0)';
+        ctx.strokeStyle = fillStr;
+        drawTheTriangle(ctx, 100, nk);
+        ctx.fillStyle = fillStr;
+        drawKeypoints(ctx, nk, fillStr);
+        let mat = calcTransformationMatrixToEquilateralTriangle(nk);
+        mat = matrixMultiply(getTranslateMatrix(0, 280), mat);
+        per = percentageDone;
+        //ctx.transform(1 + ((mat[0][0] - 1) * per), 0 + (mat[1][0] - 0) * per, 0 + (mat[0][1] - 0) * per, 1 + (mat[1][1] - 1) * per, 0 + (mat[0][2] - 0) * per, 0 + (mat[1][2] - 0) * per);
+        // ctx.translate(0, 100);
+
+        ctx.drawImage(imageFragment2, 0, 0);
+    }
+
+    // ctx.drawImage(imageWithWhiteTri1, 0, 0);
+
+    ctx.restore();
+    ctx.save();
+    {
+        ctx.globalAlpha = 0.0;
+        ctx.drawImage(imageWithWhiteTri1, 380, 0);
+        ctx.globalAlpha = 1.0;
+        var nk = g_triangleKeypoints;
+        nk = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+        var fillStr = 'rgba(255, 0, 0, 1.0)';
+        ctx.strokeStyle = fillStr;
+        drawTheTriangle(ctx, 100, nk);
+        ctx.fillStyle = fillStr;
+        drawKeypoints(ctx, nk, fillStr);
+        let mat = calcTransformationMatrixToEquilateralTriangle(nk);
+        mat = matrixMultiply(getTranslateMatrix(280, 280), mat);
+        per = percentageDone;
+        //ctx.transform(1+((mat[0][0]-1)*per), 0+(mat[1][0]-0)*per, 0+(mat[0][1]-0)*per, 1+(mat[1][1]-1)*per, 0+(mat[0][2]-0)*per, 0+(mat[1][2]-0)*per);
+        // ctx.translate(0, 100);
+        ctx.drawImage(imageFragment1, 380, 0);
+    }
+    ctx.restore();
+
+    if (g_showText) {
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Step 3: Extract fragment and \"fix\" rotation and scale",10,380);
+    }
+    var fillStr = 'rgba(255, 255, 255, 1.0)';
+    ctx.fillStyle = fillStr;
+
+    sendImage()
+
+    return (frame >= animationFrames);
+}
+
 
 //fade out
 function animation5(frame) {
@@ -2527,6 +2803,7 @@ function animation5(frame) {
         var fillStr = 'rgba(255, 0 ,0 , 1.0)';
         ctx.strokeStyle = fillStr;
         drawTheTriangle(ctx, 100, nk);
+        ctx.fillStyle = fillStr;
         drawKeypoints(ctx, nk, fillStr);
         let mat = calcTransformationMatrixToEquilateralTriangle(nk);
         mat = matrixMultiply(getTranslateMatrix(0, 280), mat);
@@ -2550,6 +2827,7 @@ function animation5(frame) {
         var fillStr = 'rgba(255, 0, 0, 1.0)';
         ctx.strokeStyle = fillStr;
         drawTheTriangle(ctx, 100, nk);
+        ctx.fillStyle = fillStr;
         drawKeypoints(ctx, nk, fillStr);
         let mat = calcTransformationMatrixToEquilateralTriangle(nk);
         mat = matrixMultiply(getTranslateMatrix(280, 280), mat);
@@ -2573,9 +2851,9 @@ function animation5(frame) {
     return (frame >= animationFrames);
 }
 
-function animation4(frame) {
+function finalTransformOfFrag(frame) {
     console.log("final transform of frag");
-    var animationFrames = 40 * mult;
+    var animationFrames = 20 * mult;
     animationStart();
 
     draw();
@@ -2736,9 +3014,9 @@ function drawTheTriangle(ctx, percentageDone, triangle, strokeStyle) {
     ctx.stroke();
 }
 
-function animation3(frame) {
+function drawTheLine(frame) {
  
-    var animationFrames = 120*mult;//60*mult
+    var animationFrames = 50*mult;//60*mult
     var percentageDone = frame/animationFrames;
     //now cut the fragment
     animationStart();
@@ -2784,8 +3062,36 @@ function animation3(frame) {
     return (frame >= animationFrames);
 }
 
+function repeatAfterFirstTransform(frame) {
+    var animationFrames = 20;//120*mult;
+
+    animationStart();
+
+
+
+    animationEnd(frame);
+
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
+    //careful or this won't be sent!!!
+
+    //pick 3 center keypoints
+    ctx.beginPath();
+    let pt = {};
+    var nk = g_triangleKeypoints;
+
+    if (g_showText) {
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Step 1: Apply 2d affine transformation to image",10,380);
+    }
+    sendImage()
+
+    return (frame >= animationFrames);
+}
+
 function transformTheWholeFirstImage(frame) {
-    var animationFrames = 60;//120*mult;
+    var animationFrames = 20;//120*mult;
 
     animationStart();
 
@@ -2823,7 +3129,7 @@ function transformTheWholeFirstImage(frame) {
 
 //do nothing for a few frames
 function doNothingForTheFirstFewFrames(frame) {
-    var animationFrames = 20*mult;
+    var animationFrames = 100*mult;
     animationStart();
 
     var percentageDone = frame/animationFrames;
@@ -3015,29 +3321,47 @@ function doAnimations(frame) {
             isDone = transformTheWholeFirstImage(frame-prevAnimationsFrameCount);
             break;
         case 2:
+            isDone = repeatAfterFirstTransform(frame-prevAnimationsFrameCount);
+            break;
+        case 3:
             //fade in keypoints
             isDone = fadeInKeypoints(frame-prevAnimationsFrameCount);
             break;
-        case 3:
-            //show keypoints
+        case 4:
+            //repeat frame showing keypoints
+            isDone = repeatShowingPlainKeypoints(frame-prevAnimationsFrameCount);
+            break;
+        case 5:
+            //fade in red keypoints
             isDone = animation6(frame-prevAnimationsFrameCount);
             break;
-        case 4:
+        case 6:
+            //show the red keypoints and other keypoints
+            isDone = showRedKeypointsAndOtherKeypoints(frame-prevAnimationsFrameCount);
+            break;
+        case 7:
             //fade out keypoints
             isDone = animation8(frame-prevAnimationsFrameCount);
             break;
-        case 5:
-            //draw the line
-            isDone = animation3(frame-prevAnimationsFrameCount);
+        case 8:
+            //show just the red keypoints for a bit
+            isDone = showJustRedKeypoints(frame-prevAnimationsFrameCount);
             break;
-        case 6:
+        case 9:
+            //draw the line
+            isDone = drawTheLine(frame-prevAnimationsFrameCount);
+            break;
+        case 10:
             //fade out image
             isDone = animation5(frame-prevAnimationsFrameCount);
             break;
-        case 7:
-            isDone = animation4(frame-prevAnimationsFrameCount);
+        case 11:
+            isDone = repeatFrameBeforeFinalTransform(frame-prevAnimationsFrameCount);
             break;
-        case 8:
+        case 12:
+            isDone = finalTransformOfFrag(frame-prevAnimationsFrameCount);
+            break;
+        case 13:
             isDone = repeatTheLastFrame(frame-prevAnimationsFrameCount);
             break;
         // case 6:
