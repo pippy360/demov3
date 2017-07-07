@@ -2151,7 +2151,13 @@ function _debug_addlayer(imageSrc) {
     image = new Image();
     image.src = imageSrc;
     image.onload = function () {
-        var keypoints = generateRandomKeypoints({width: image.width, height: image.height}, g_numberOfKeypoints);
+        var keypoints = [{ x: 208, y: 196},{ x: 107, y: 100},
+            { x: 153, y: 102},{ x: 111, y: 59},{ x: 46, y: 231},{ x: 212, y: 3},{ x: 89, y: 48},{ x: 1, y: 232},{ x: 262, y: 149},
+            { x: 158, y: 8},{ x: 269, y: 116},{ x: 3, y: 105},{ x: 12, y: 222},{ x: 232, y: 262},{ x: 224, y: 214},{ x: 243, y: 90},
+            { x: 145, y: 89}, { x: 259, y: 137},{ x: 3, y: 234},{ x: 24, y: 120},{ x: 34, y: 62},{ x: 137, y: 229},{ x: 138, y: 15},
+            { x: 227, y: 48},{ x: 75, y: 254},{ x: 48, y: 103},{ x: 197, y: 57},{ x: 28, y: 32},{ x: 107, y: 25},{ x: 121, y: 22}];
+        // generateRandomKeypoints({width: image.width, height: image.height}, g_numberOfKeypoints);
+
         var layer1 = newLayer(image, keypoints, ORANGE_COLOUR);
         var layer2 = newLayer(image, null, ORANGE_COLOUR);
         layer1.associatedLayer = layer2;
