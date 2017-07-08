@@ -847,7 +847,7 @@ function drawLineFromPointToMousePosition(ctx) {
 }
 
 function drawTriangleWithColour(ctx, tri, strokeColour, fillColour, enableFill) {
-    var alpha = 1;
+    var alpha = .9;
 
     ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', ' + alpha + ')';
     //ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
@@ -864,13 +864,14 @@ function drawTriangleWithColour(ctx, tri, strokeColour, fillColour, enableFill) 
 }
 
 function drawKeypoints(interactiveCanvasContext, keypoints) {
-    interactiveCanvasContext.beginPath();
-    interactiveCanvasContext.strokeStyle = "red";
+    interactiveCanvasContext.closePath();
+
     for (var i = 0; i < keypoints.length; i++) {
         var currentKeypoint = keypoints[i];
-        interactiveCanvasContext.rect(currentKeypoint.x, currentKeypoint.y, 3, 3);
+        interactiveCanvasContext.beginPath();
+        interactiveCanvasContext.arc(currentKeypoint.x,currentKeypoint.y,2,0,2*Math.PI);
+        interactiveCanvasContext.stroke();
     }
-    interactiveCanvasContext.closePath();
     interactiveCanvasContext.stroke();
 }
 
@@ -2143,7 +2144,7 @@ function animate() {
 }
 
 function init() {
-    loadImageAndInit('images/dog1_resize3.jpg');
+    loadImageAndInit('images/kodaline.jpg');
 }
 
 init();
@@ -2382,6 +2383,7 @@ function animationEnd(frame) {
         ctx = canvas.getContext('2d');
 
     var trans = g_globalState.interactiveCanvasState.layers[0].appliedTransformations;
+    var kp5 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     ctx.strokeStyle = 'rgba(255,0,0,.03)';
     ctx.lineWidth = 1;
     var keypoints1 = [];
@@ -2389,11 +2391,20 @@ function animationEnd(frame) {
     var retVal = draw()[0];
     var keys = retVal.keys();
 
-    //
-
+    var keysArr = [];
+    var i = 0;
     for (var key = keys.next(), i = 0; !key.done; key = keys.next(), i++) { //iterate over keys
-        if( i > 500)
-            break;
+        keysArr.push(key);
+    }
+
+    var spacing = keysArr.length/1000;
+    if (spacing < 1) {
+        spacing = 1;
+    }
+    for (var i = 0; i < keysArr.length; i += spacing) {
+        key = keysArr[parseInt(i)];
+        // if( i > 500)
+        //     break;
 
         var tri = retVal.get(key.value);
         var tri1 = tri.referenceTriangle;
@@ -2404,15 +2415,16 @@ function animationEnd(frame) {
     }
 
 
-    var strokeColour = BLUE_COLOUR;
-    alpha = 1;
+    var strokeColour = ORANGE_COLOUR;
+    var alpha = 1.0;
     ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', ' + alpha + ')';
 
 
-    keys = retVal.keys();
-    for (var key = keys.next(), i = 0; !key.done; key = keys.next(), i++) { //iterate over keys
-        if( i > 500)
-            break;
+    for (var i = 0; i < keysArr.length; i += spacing) {
+        key = keysArr[parseInt(i)];
+        // if( i > 500)
+        //     break;
+
         var tri = retVal.get(key.value);
         var tri1 = tri.referenceTriangle;
         var tri2 = tri.interactiveTriangle;
@@ -2429,15 +2441,26 @@ function animationEnd(frame) {
     }
 
     //var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints1 = addToX2(keypoints1, 380);
-    drawKeypoints(ctx, keypoints1);
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, trans);
+    keypoints1 = addToX2(keypoints1, 0);
+    var strokeColour = ORANGE_COLOUR;
+    ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', .2)';
+
+    // drawKeypoints(ctx, keypoints1);
+    // keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, trans);
     var imageOutline = g_globalState.referenceCanvasState.layers[0].nonTransformedImageOutline;
     imageOutline = applyTransformationToImageOutline(imageOutline, trans);
 //        keypoints2 = filterKeypointsOutsidePolygon(keypoints2, imageOutline);
 //        keypoints2 = filterKeypointsOutsidePolygon(keypoints2, buildRect(280, 280));
-//        drawKeypoints(ctx, keypoints2);
+       drawKeypoints(ctx, keypoints2);
 
+
+    sendImage();
+
+}
+
+function sendImage() {
+    var canvas = document.getElementById('bigCanvas'),
+        ctx = canvas.getContext('2d');
 
     var image1 = canvas.toDataURL('image/jpeg', 0.92).replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 //
@@ -2467,8 +2490,8 @@ function animationEnd(frame) {
             console.log(msg);
         }
     });
-
 }
+
 
 var currentAnimation = 0;
 var prevAnimationsFrameCount = 0;
