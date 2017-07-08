@@ -1658,9 +1658,8 @@ function canvasMouseMoveEvent(canvasMousePosition) {
 }
 
 $("#" + INTERACTIVE_CANVAS_OVERLAY_ID).mousemove(function (e) {
-    const pageMousePosition = getCurrentPageMousePosition(e);
-    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
     var canvasElem = $("#" + INTERACTIVE_CANVAS_OVERLAY_ID)[0];
+    const canvasMousePosition = getCurrentCanvasMousePosition(e, canvasElem);
 
     canvasMouseMoveEvent(canvasMousePosition);
 });
@@ -1687,21 +1686,28 @@ function getCurrentPageMousePosition(e) {
 }
 
 function getCurrentCanvasMousePosition(e, canvasElem) {
-    if (e.offsetX || e.offsetX === 0) {
-        return {
-            x: e.offsetX,
-            y: e.offsetY
-        };
-    } else if (e.layerX || e.offsetX === 0) {
-        return {
-            x: e.layerX,
-            y: e.layerY
-        };
-    } else if (canvasElem != null) {
+//     if (e.offsetX || e.offsetX === 0) {
+//         return {
+//             x: e.offsetX,
+//             y: e.offsetY
+//         };
+//     } else if (e.layerX || e.offsetX === 0) {
+//         return {
+//             x: e.layerX,
+//             y: e.layerY
+//         };
+//     } else
+    if (e.originalEvent.changedTouches != null && canvasElem != null) {
         var rect = canvasElem.getBoundingClientRect();
         return {
             x: e.originalEvent.changedTouches[0].clientX - rect.left,
             y: e.originalEvent.changedTouches[0].clientY - rect.top
+        };
+    } else if (e.clientX || e.clientX === 0 && canvasElem != null) {
+        var rect = canvasElem.getBoundingClientRect();
+        return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
         };
     } else {
         console.log("Error: Invalid state");
