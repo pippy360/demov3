@@ -847,7 +847,7 @@ function drawLineFromPointToMousePosition(ctx) {
 }
 
 function drawTriangleWithColour(ctx, tri, strokeColour, fillColour, enableFill) {
-    var alpha = .9;
+    var alpha = .7;
 
     ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', ' + alpha + ')';
     //ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
@@ -2397,7 +2397,7 @@ function animationEnd(frame) {
         keysArr.push(key);
     }
 
-    var spacing = keysArr.length/1000;
+    var spacing = keysArr.length/100;
     if (spacing < 1) {
         spacing = 1;
     }
@@ -2416,7 +2416,7 @@ function animationEnd(frame) {
 
 
     var strokeColour = ORANGE_COLOUR;
-    var alpha = 1.0;
+    var alpha = .1;
     ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', ' + alpha + ')';
 
 
@@ -2443,7 +2443,7 @@ function animationEnd(frame) {
     //var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints1 = addToX2(keypoints1, 0);
     var strokeColour = ORANGE_COLOUR;
-    ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', .2)';
+    ctx.strokeStyle = 'rgba(' + strokeColour[0] + ', ' + strokeColour[1] + ' ,' + strokeColour[2] + ', .6)';
 
     // drawKeypoints(ctx, keypoints1);
     // keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, trans);
