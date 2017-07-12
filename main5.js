@@ -2164,7 +2164,7 @@ function animate() {
 }
 
 function init() {
-    loadImageAndInit('images/dog1_resize3.jpg');
+    loadImageAndInit('images/morty.png');
 }
 
 init();
@@ -3083,7 +3083,7 @@ function repeatAfterFirstTransform(frame) {
     if (g_showText) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "black";
-        ctx.fillText("Step 1: Apply 2d affine transformation to image",10,380);
+        ctx.fillText("1. Apply 2D affine transformation to image",10,380);
     }
     sendImage()
 
@@ -3120,7 +3120,7 @@ function transformTheWholeFirstImage(frame) {
     if (g_showText) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "black";
-        ctx.fillText("Step 1: Apply 2d affine transformation to image",10,380);
+        ctx.fillText("1. Apply 2D affine transformation to image",10,380);
     }
     sendImage()
 
@@ -3151,7 +3151,7 @@ function doNothingForTheFirstFewFrames(frame) {
     if (g_showText) {
         ctx.font = "30px Arial";
         ctx.fillStyle = "black";
-        ctx.fillText("Step 1: Apply 2d affine transformation to image",10,380);
+        ctx.fillText("1. Apply 2D affine transformation to image",50,380);
     }
     sendImage()
     return (frame >= animationFrames);
