@@ -109,6 +109,11 @@ function newCanvasState() {
 }
 
 var _g_preloadImage = null;
+var _g_linesImage1 = null;
+var _g_linesImage2 = null;
+var _g_linesImage3 = null;
+var _g_linesImage4 = null;
+var _g_linesImage5 = null;
 
 var g_globalState = null;
 function newGlobalState() {
@@ -2112,6 +2117,22 @@ function initAfterImageLoad() {
 }
 
 function loadImageAndInit(imageSrc) {
+    _g_linesImage1 = new Image();
+    _g_linesImage1.src = "images/lines1.png";
+
+    _g_linesImage2 = new Image();
+    _g_linesImage2.src = "images/lines2.png";
+
+    _g_linesImage3 = new Image();
+    _g_linesImage3.src = "images/lines3.png";
+
+    _g_linesImage4 = new Image();
+    _g_linesImage4.src = "images/lines4.png";
+
+    _g_linesImage5 = new Image();
+    _g_linesImage5.src = "images/lines5.png";
+
+
     _g_preloadImage = new Image();
     _g_preloadImage.src = imageSrc;
     _g_preloadImage.onload = function () {
@@ -2335,23 +2356,19 @@ function fadeInKeypoints(frame) {
     drawKeypoints(ctx, keypoints1, "blue");
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 10));
         
 
     drawKeypoints(ctx, keypoints2, "blue");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
-    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 10));
     drawKeypoints(ctx, nk2, "blue");
         ctx.globalAlpha = 1;
     ctx.globalAlpha = 1.0;
 
     if (g_showText) {
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "black";
-        ctx.fillText("Step 2: Compute affine transformation-invariant",10,380);
-        ctx.fillText("keypoints and select 3 keypoints",115,410);
-
+        ctx.drawImage(_g_linesImage1, 0, 310);
     }
     sendImage()
 
@@ -2378,7 +2395,7 @@ function repeatShowingPlainKeypoints(frame) {
 
     var nk = g_triangleKeypoints;
 
-    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
 
 
     ctx.globalAlpha = 1;
@@ -2391,13 +2408,13 @@ function repeatShowingPlainKeypoints(frame) {
     drawKeypoints(ctx, keypoints1, "blue");
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(310, 10));
 
 
     drawKeypoints(ctx, keypoints2, "blue");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
     drawKeypoints(ctx, nk2, "blue");
-    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     drawKeypoints(ctx, nk2, "blue");
     ctx.globalAlpha = 1;
     ctx.globalAlpha = 1.0;
@@ -2434,7 +2451,7 @@ function showJustRedKeypoints(frame) {
 
     var nk = g_triangleKeypoints;
 
-    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     ctx.globalAlpha = 0.0;
     var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
@@ -2445,11 +2462,11 @@ function showJustRedKeypoints(frame) {
     drawKeypoints(ctx, keypoints1, "blue");
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(310, 10));
     // ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
     drawKeypoints(ctx, keypoints2, "blue");
     ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
-    nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     ctx.globalAlpha = 1.0;
     drawKeypoints(ctx, nk3, "red");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
@@ -2491,7 +2508,7 @@ function animation8(frame) {
 
     var nk = g_triangleKeypoints;
 
-    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     ctx.globalAlpha = 1.0 - percentageDone;
     var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
@@ -2502,11 +2519,11 @@ function animation8(frame) {
     drawKeypoints(ctx, keypoints1, "blue");
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(310, 10));
     // ctx.fillStyle = 'rgba(255, 255, 255, 1.0)';
     drawKeypoints(ctx, keypoints2, "blue");
     ctx.fillStyle = 'rgba(255, 0, 0, 1.0)';
-    nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nk3 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     ctx.globalAlpha = 1.0;
     drawKeypoints(ctx, nk3, "red");
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
@@ -2546,7 +2563,7 @@ function showRedKeypointsAndOtherKeypoints(frame) {
 
     var nk = g_triangleKeypoints;
 
-    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
 
     var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
@@ -2557,13 +2574,13 @@ function showRedKeypointsAndOtherKeypoints(frame) {
     drawKeypoints(ctx, keypoints1, "blue");
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(310, 10));
     drawKeypoints(ctx, keypoints2, "blue");
 
     var fillStr = 'rgba(255,'+ parseInt(255*(0)) +', ' + parseInt(255*(0)) +', 1.0)';
 
     ctx.fillStyle = fillStr;
-    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     fillStr = 'rgba('+ parseInt(255*(1)) +',0,'+ parseInt(255*(0)) +', 1.0)';
     drawKeypoints(ctx, nk2, fillStr);
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
@@ -2602,7 +2619,7 @@ function animation6(frame) {
 
     var nk = g_triangleKeypoints;
 
-    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nonTransformedImage = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
 
     var keypoints1 = g_globalState.interactiveCanvasState.layers[0].keypoints;
     keypoints1 = applyTransformationMatrixToAllKeypointsObjects(keypoints1, g_globalState.interactiveCanvasState.layers[0].appliedTransformations);
@@ -2613,13 +2630,13 @@ function animation6(frame) {
     drawKeypoints(ctx, keypoints1, "blue");
 
     var keypoints2 = g_globalState.interactiveCanvasState.layers[0].keypoints;
-    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(380, 0));
+    keypoints2 = applyTransformationMatrixToAllKeypointsObjects(keypoints2, getTranslateMatrix(310, 10));
     drawKeypoints(ctx, keypoints2, "blue");
 
     var fillStr = 'rgba(255,'+ parseInt(255*(1-percentageDone)) +', ' + parseInt(255*(1-percentageDone)) +', 1.0)';
 
     ctx.fillStyle = fillStr;
-    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(380, 0));
+    nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getTranslateMatrix(310, 10));
     fillStr = 'rgba('+ parseInt(255*(percentageDone)) +',0,'+ parseInt(255*(1-percentageDone)) +', 1.0)';
     drawKeypoints(ctx, nk2, fillStr);
     nk2 = applyTransformationMatrixToAllKeypointsObjects(nk, getActiveLayer(g_globalState).appliedTransformations);
@@ -3149,9 +3166,7 @@ function doNothingForTheFirstFewFrames(frame) {
     //careful or this won't be sent!!!
 
     if (g_showText) {
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "black";
-        ctx.fillText("1. Apply 2D affine transformation to image",50,380);
+        ctx.drawImage(_g_linesImage1, 0, 310);
     }
     sendImage()
     return (frame >= animationFrames);
@@ -3211,10 +3226,10 @@ function drawAllImagesToCanvasAndSend(g_frame) {
     var ctx3= document.getElementById('databaseImageCanvasImageContent');
     var ctx4= document.getElementById('databaseImageCanvasUiOverlay');
 
-    ctx.drawImage(ctx1, 0, 0);
-    ctx.drawImage(ctx2, 0, 0);
-    ctx.drawImage(ctx3, 380, 0);
-    ctx.drawImage(ctx4, 380, 0);
+    ctx.drawImage(ctx1, 40, 10);
+    ctx.drawImage(ctx2, 40, 10);
+    ctx.drawImage(ctx3, 380, 10);
+    ctx.drawImage(ctx4, 3, 10);
 
 //
 //        var image1 = canvas.toDataURL('image/jpeg', 0.92).replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
