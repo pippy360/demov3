@@ -2164,7 +2164,7 @@ function animation7(frame) {
     g_globalState.temporaryAppliedTransformations.transformationCenterPoint = {x:140,y:140};
     g_globalState.temporaryAppliedTransformations.uniformScale = (5*percentageDone) + 1;
     var scale = (2*percentageDone)+1;;
-    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 45);
+    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 30);
     g_globalState.temporaryAppliedTransformations.directionalScaleMatrix = scaleMatrix;
 
     animationEnd(frame);
@@ -2180,7 +2180,7 @@ function animation6(frame) {
     g_globalState.temporaryAppliedTransformations.transformationCenterPoint = {x:140,y:140};
     g_globalState.temporaryAppliedTransformations.uniformScale = (1/(percentageDone*2 + 1));
     var scale = (2*percentageDone)+1;;
-    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 45);
+    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 30);
     g_globalState.temporaryAppliedTransformations.directionalScaleMatrix = scaleMatrix;
 
     animationEnd(frame);
@@ -2326,10 +2326,10 @@ function drawAllImagesToCanvasAndSend(g_frame) {
     var ctx3= document.getElementById('databaseImageCanvasImageContent');
     var ctx4= document.getElementById('databaseImageCanvasUiOverlay');
 
-    ctx.drawImage(ctx1, 10, 10);
-    ctx.drawImage(ctx2, 10, 10);
-    ctx.drawImage(ctx3, 310, 10);
-    ctx.drawImage(ctx4, 310, 10);
+    ctx.drawImage(ctx1, 40, 10);
+    ctx.drawImage(ctx2, 40, 10);
+    ctx.drawImage(ctx3, 380, 10);
+    ctx.drawImage(ctx4, 380, 10);
 
 //
 //        var image1 = canvas.toDataURL('image/jpeg', 0.92).replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
@@ -2421,7 +2421,7 @@ function animationEnd(frame) {
         var tri = retVal.get(key.value);
         var tri1 = tri.referenceTriangle;
         var tri2 = tri.interactiveTriangle;
-        var out = applyTransformationMatrixToAllKeypointsObjects(tri1, getTranslateMatrix(310, 10));
+        var out = applyTransformationMatrixToAllKeypointsObjects(tri1, getTranslateMatrix(380, 10));
 
         drawTriangle(ctx, out, ORANGE_COLOUR);
     }
@@ -2446,10 +2446,10 @@ function animationEnd(frame) {
         var pt1 =  getCenterPointOfPoly(tri1);
         keypoints1.push({x: pt1[0], y: pt1[1]});
         var pt2 =  getCenterPointOfPoly(tri2);
-        keypoints2.push({x: pt2[0]+10, y: pt2[1]+10});
-        addToX(pt1, 310);
+        keypoints2.push({x: pt2[0]+40, y: pt2[1]+10});
+        addToX(pt1, 380);
         addToY(pt1, 10);
-        drawPolygonPath(ctx, [{x: pt1[0]+310, y: pt1[1]+10}, {x: pt2[0]+10, y: pt2[1]+10}]);
+        drawPolygonPath(ctx, [{x: pt1[0]+380, y: pt1[1]+10}, {x: pt2[0]+40, y: pt2[1]+10}]);
         ctx.stroke();
     }
 
