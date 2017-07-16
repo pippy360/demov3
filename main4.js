@@ -2164,7 +2164,7 @@ function animation7(frame) {
     g_globalState.temporaryAppliedTransformations.transformationCenterPoint = {x:140,y:140};
     g_globalState.temporaryAppliedTransformations.uniformScale = (5*percentageDone) + 1;
     var scale = (2*percentageDone)+1;;
-    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 30);
+    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 200);
     g_globalState.temporaryAppliedTransformations.directionalScaleMatrix = scaleMatrix;
 
     animationEnd(frame);
@@ -2180,7 +2180,7 @@ function animation6(frame) {
     g_globalState.temporaryAppliedTransformations.transformationCenterPoint = {x:140,y:140};
     g_globalState.temporaryAppliedTransformations.uniformScale = (1/(percentageDone*2 + 1));
     var scale = (2*percentageDone)+1;;
-    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 30);
+    var scaleMatrix = getDirectionalScaleMatrix(Math.sqrt(scale), 1 / Math.sqrt(scale), 200);
     g_globalState.temporaryAppliedTransformations.directionalScaleMatrix = scaleMatrix;
 
     animationEnd(frame);
