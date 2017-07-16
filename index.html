@@ -10,438 +10,9 @@
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
-    <style>
-        document {
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-        }
-        .nav {
-            border-bottom: 0px;
-        }
-        .nav>li {
-            cursor: pointer;
-        }
-
-        .nav>li>a {
-            padding: 10px 15px;
-            display: block;
-            position: relative;
-        }
-
-        .nav>li.active>a {
-            color: #555;
-            cursor: default;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-bottom-color: transparent;
-            border-top-right-radius: 4px;
-            border-top-left-radius: 4px;
-        }
-
-        #mainContentContainer {
-            padding: 0px 30px;
-            margin: 0px auto;
-            width: 1200px;
-            display: block;
-        }
-
-        .btn {
-            cursor: pointer;
-        }
-
-        .demoAreaContainer {
-            width: 1140px;
-            display: block;
-        }
-
-        .bigCanvasContainerWrapper {
-            width: 1140px;
-            float: left;
-            margin-bottom: 20px;
-        }
-
-        .bigCanvasContainer {
-            width: 910px;
-            margin: auto;
-        }
-
-        .prevBtn {
-            float: left;
-            margin-left: 35px;
-        }
-  
-        .nextBtn {
-            float: right;
-            margin-right: 35px;
-        }
-        
-        .move {
-            cursor: move;
-        }
-
-        #lineSvgTag {
-            pointer-events: none;
-        }
-
-        .btn {
-            font-size: 12px;
-        }
-
-        #triangleOutputList {
-            max-width: 400px;
-            height: 320px;
-            overflow: auto;
-            margin-top: 20px;
-        }
-
-        .canvasWrapperLeft {
-            display: block;
-            /*width: 285px;*/
-            float: left;
-            margin-top: 35px;
-            margin-bottom: 40px;
-            margin-right: 68px;
-            position: relative;
-        }
-
-        .canvasWrapperRight {
-            display: block;
-            /*width: 285px;*/
-            float: right;
-            margin-top: 35px;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .trianglesListWrapper {
-            margin-left: 40px;
-            height: 260px;
-            width: 400px;
-            display: inline-block;
-            float: right;
-        }
-
-        .distanceOutputHelpMessage {
-            padding: 8px;
-            text-align: center;
-        }
-
-        .trianglesListInnerWrapper {
-            height: 230px;
-            display: block;
-            overflow: auto;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.19);
-	    background-color: #fff;
-        }
-
-        .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-            background-color: rgba(0, 0, 0, 0.01);
-        }
-
-        .triangleListBody {
-            overflow: auto;
-        }
-
-        .header {
-            background-color: #183D4E;
-            width: 100%;
-            min-width: 1200px;
-            color: #ffffff;
-            overflow: hidden;
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            border-bottom: solid 1px rgba(0,0,0,0.4);
-        }
-
-        .headerInner {
-            margin: 35px auto;
-            width: 1140px;
-        }
-
-        .headerInner h1 {
-            font-size: 32px;
-        }
-
-        .buttonsWrapper {
-            width: 100%;
-            min-width: 1200px;
-            border-bottom: 1px solid #ddd;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-        }
-
-        .buttonsInner {
-            margin: 8px auto 0px auto;
-            padding: 2px 30px;
-            width: 1200px;
-        }
-
-        .canvasTitle {
-            color: rgba(0, 0, 0, .8);
-            display: block;
-            font-size: 12px;
-            margin-bottom: 5px;
-            padding-bottom: 0px;
-        }
-
-        .canvasTitleRight {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            font-size: 12px;
-        }
-
-        .triangleCountOutput {
-            color: rgba(0, 0, 0, .8);
-            display: block;
-            font-size: 12px;
-            margin: 0px;
-            padding: 0px;
-            margin-top: 3px;
-        }
-
-        #output {
-            width: 1100px;
-            margin: auto;
-        }
-
-        .aboutAreaWrapper {
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-            margin: auto;
-            width: 100%;
-            min-width: 1200px;
-            box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-        }
-        .aboutArea {
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            color: rgba(0,0,0,0.7);
-            width: 700px;
-            padding: 80px 0px;
-            margin: auto;
-        }
-
-        .smallCanvasWrapper {
-            /*width: 750px;*/
-            height: 200px;
-        }
-
-        #fragmentCanvas2 {
-
-            float: right;
-        }
-
-        .distanceOutput {
-            width: 308px;
-            float: left;
-        }
-
-        .distanceOutputTitle {
-            padding-top: 30px;
-            font-size: 16px;
-            color: rgba(0, 0, 0, .87);
-            text-align: center;
-            width: 100%;
-        }
-
-        .distanceOutputData {
-            width: 100%;
-            text-align: center;
-            font-size: 20px;
-            color: black;
-        }
-	    
-        .valid {
-            color: #2c662e;
-        }
-
-        .invalid {
-            color: #f44336;
-        }
-        .fragmentCanvasWrapper {
-            /*width: 165px;*/
-            float: left;
-        }
-
-        .mainContentContainerWrapper {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            background-color: #f7f7f7;
-            width: 100%;
-            min-width: 1200px;
-            padding-bottom: 60px;
-            height: 700px;
-        }
-
-        .transformationsLabel {
-            font-size: 12px;
-        }
-
-        .selectedTriangleTR {
-            background-color: rgba(24, 61, 78, .9);
-            color: white;
-        }
-
-        .fishImage {
-            width: 485px;
-            height: 222px;
-            background-image: url('images/fish_1.jpg');
-            background-size: 485px 222px;
-            background-repeat: no-repeat;
-        }
-
-        .fishImage:hover {
-            background-image: url('images/fish_2.jpg');
-        }
-
-        .canvasBottom {
-            position: absolute;
-        }
-
-        .canvasTop {
-            position: absolute;
-        }
-
-        .canvasClickThrough {
-            position: absolute;
-            pointer-events: none;
-        }
-
-        .twoCanvasWrapper {
-        }
-
-        .interactiveCanvasWrapper {
-            width: 280px;
-            height: 280px;
-            cursor: pointer;
-	    touch-action: none;
-        }
-
-        .referenceCanvasWrapper {
-            width: 560px;
-            height: 280px;
-        }
-
-        .canvasShadow {
-            /*border: 1px solid black;*/
-            box-shadow: 0px 0px 8px 2px rgba(24, 61, 78, .2);
-        }
-        .moreWrapper {
-            position: relative;
-            width: 100%;
-            min-width: 1200px;
-        }
-        .more {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-        }
-        .moreButton {
-            position: absolute;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
-            border: 0px;
-            background-color: white;
-            top: -28px;
-            left: -28px;
-        }
-
-        body:after{
-            display:none;
-            content: url('images/fish_1.jpg') url('images/fish_2.jpg');
-        }
-
-        .dropdown-menu li {
-            cursor: pointer;
-        }
-
-        .backgroundColourGrey {
-            background-color: #eee;
-        }
-
-        .triangleList tr{
-            text-align: center;
-        }
-        #matchNoMatchLabel{
-            text-align: center;
-        }
-
-        p {
-            font-size: 20px;
-        }
-
-        .figureText {
-            margin-top: 20px;
-            width: 100%;
-            display: block;
-            text-align: center;
-            font-weight: bold;
-        }
-        .stepsWrapper {
-            padding: 0px 40px;
-        }
-        .boldListNumber{
-            font-weight: bold;
-        }
-
-        #queryImageCanvasUiOverlay{
-            touch-action: none;
-        }
-        footer {
-            border-top: solid 1px #eee;
-            background-color: #f7f7f7;
-            width: 100%;
-            height: 150px;
-        }
-        .footerContents {
-            margin: auto;
-            width: 600px;
-            padding: 40px 0px;
-            text-align: center;
-        }
-        .styleCopied {
-            width: 200px;
-            display: block;
-            float: left;
-        }
-        .styleCopiedLink {
-            font-size: 13px;
-            color: #999;
-        }
-        .contactMe {
-            font-size: 15px;
-            color: #999;
-            margin-top: 40px;
-        }
-        .github-link {
-            width: 60px;
-            height: 60px;
-            position: absolute;
-            display: block;
-            top: 0;
-            right: 0;
-            z-index: 1000;
-        }
-        .github-link .bg {
-            fill: #fff;
-            fill-opacity: 0.2;
-        }
-        .github-link:hover .bg {
-            fill-opacity: 0.3;
-        }
-        .github-link .icon {
-            fill: #fff;
-            fill-opacity: 0.6;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<!--<a href="https://github.com/pippy360/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>-->
 <a class="github-link" href="https://github.com/pippy360" title="Source on GitHub">
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60.5 60.5" width="60" height="60">
         <polygon class="bg" points="60.5,60.5 0,0 60.5,0 "></polygon>
@@ -485,16 +56,6 @@
                         <button type="button" style="margin-bottom: 8px;" class="alert-danger btn btn-secondary"
                             onclick="reset()">Reset</button>
                    </div>
-
-                   <!--<div class="dropdown" style="float: left">-->
-                        <!--<button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"-->
-                                <!--name="options2" autocomplete="off">Settings<span-->
-                                <!--class="caret"></span></button>-->
-                    <!--<ul class="dropdown-menu dropdown-menu-right">-->
-                        <!--<li class="dropdown-item" id="toggleDrawInteractiveUIOverlayButton" onclick="toggleDrawInteractiveUIOverlayWrapper()"><a href="#">Toggle draw 1st canvas UI overlay</a></li>-->
-                        <!--<li class="dropdown-item" id="toggleDrawReferenceUIOverlayButton" onclick="toggleDrawReferenceUIOverlayWrapper()"><a href="#">Toggle draw 2nd canvas UI overlay</a></li>-->
-                    <!--</ul>-->
-                   <!--</div>-->
                 </span>
             </span>
         </div>
@@ -589,96 +150,136 @@
     </div>
     <article class="aboutAreaWrapper">
         <div class="aboutArea">
-            <h2>About</h2>
-            <p>
-                This demo showcases an algorithm which performs 2D affine transformation-invariant partial image-matching in sublinear time. The algorithm compares the input to its database of preprocessed images and determines if the input matches any image in the database. The database need not contain the original image as inputs can be matched to any 2D affine transformation of the original. This means that images which have been scaled (uniformly or non-uniformly), skewed, translated, cropped or rotated (or have undergone any combination of these transformations) can be identified as coming from the same source image (Figure 1).
-            </p>
-            <p>
-                The algorithm runs in sublinear time, regardless of the number of transformations applied or the number of images in the database. Note that if image-matching could not be done in sublinear time it would not function at the scale that the likes of Google or Microsoft require.
-            </p>
-            <br>
-            <video controls loop>
-                <source src="images/out48.webm" type="video/webm; codecs=vp9,vorbis">
-                <source src="images/out48.mp4" type="video/mp4">
-            </video>
-            <span class="figureText">Figure 1. 2D affine transformation invariant image-matching</span>
-            <br>
-            <p>
-                If the input is a composite of images or image fragments, the algorithm will return matches for each image/image fragment (Figure 2)
-            </p>
-
-            <br>
-            <img src="images/matchingtris.png"  style="width: 100%"></img>
-            <span class="figureText">Figure 2. The query image (c), which is a composite of (a) and (b), matches the two images (d) and (e) stored in the database</span>
-            <br>
-            <br>
-
-            <br>
-            <h2>How it Works</h2>
-            <br>
-            <p class="stepsWrapper">
-                <span class="boldListNumber">1.</span>
-                The algorithm finds keypoints in the input using edge detection<a href="#supKeypointFinder"><sup>1</sup></a>.
-                <br>
-                <br>
-                <span class="boldListNumber">2.</span>
-                Each set of three keypoints is converted into a triangle<a href="#supHashLookup"><sup>2</sup></a>.
-                <br>
-                <br>
-                <span class="boldListNumber">3.</span>
-                These triangles are transformed into equilateral triangles.
-                <br>
-                <br>
-                <span class="boldListNumber">4.</span>
-                A perceptual hashing algorithm (in this case PHash) is used to produce a hash for each triangle.
-                <br>
-                <br>
-                <span class="boldListNumber">5.</span>
-                The algorithm compares the hash to those stored in the database and returns all matching images<a href="#supCompositeLookup"><sup>3</sup></a>.
-                <br>
-                <br>
-            </p>
-            <p>
-                All images in the database have been preprocessed in this manner to produce hashes for comparison.
-            </p>
-            <br>
-            <br>
-            <br>
-            <video controls>
-                <source src="images/out49.webm" type="video/webm; codecs=vp9,vorbis">
-                <source src="images/out49.mp4" type="video/mp4">
-            </video>
-            <span class="figureText">Figure 3. Step-by-step video guide showing how the algorithm operates</span>
-            <br>
-            <p>
-                <sup id="supKeypointFinder">1</sup> Any keypoint-finding software can be used so long as it is 2D affine transformation-invariant.
-                <br>
-                <sup id="supHashLookup">2</sup> The comparison can be done through a hash lookup (which can be done in constant time)
-                or by finding a ‘nearest-neighbour’ in the database (which can be done
-                in amortized log<sub><span style="font-size: 10px">2</span></sub>n time).
-                <br>
-                <sup id="supCompositeLookup">3</sup> The algorithm will return multiple matches if the input is a composite of images.
-            </p>
-            <br>
-            <br>
-            <br>
-            <h2>How it Compares to the Competition</h2>
-            <p>
-                As you can see in Figure 4 below, the algorithm performs better than industry leaders in matching images which have undergone 2D affine transformations. Even the best-performing service, Google Image Search, fails to handle a simple 45 degree rotation.
-            </p>
-            <br>
-            <img src="images/cats image.jpg" style="width: 100%">
-            <b>Figure 4.</b> Comparison of the image-matching capabilities of our
-            algorithm versus market leaders.
-            <br>
-            <br>
-            <p>
-                Market leaders show limited ability to find matches of images which have undergone certain transformations.
-                Our algorithm solves this problem for 2D affine transformations and, if used in
-                conjunction with other modern techniques, offers a significant improvement in reverse-image searching.
-            </p>
-            <br>
-
+            <div>
+                <h2 style="margin-top: 10px">About</h2>
+                <p>
+                    This demo showcases an algorithm which performs 2D affine transformation-invariant partial image-matching
+                    in sublinear time. The algorithm compares the input to its database of preprocessed images and determines
+                    if the input matches any image in the database. The database need not contain the original image as inputs
+                    can be matched to any 2D affine transformation of the original. This means that images which have been
+                    scaled (uniformly or non-uniformly), skewed, translated, cropped or rotated (or have undergone any combination
+                    of these transformations) can be identified as coming from the same source image (Figure 1).
+                </p>
+                <p>
+                    The algorithm runs in sublinear time, regardless of the number of transformations applied or the number
+                    of images in the database. Note that if image-matching could not be done in sublinear time it would not
+                    function at the scale that the likes of Google or Microsoft require.
+                </p>
+                <div class="affineDemoVideoWrapper articleContent">
+                    <video class="affineDemoVideo" controls loop>
+                        <source src="images/affineDemo.webm" type="video/webm; codecs=vp9,vorbis">
+                        <source src="images/affineDemo.mp4" type="video/mp4">
+                    </video>
+                    <div class="figureText"><b>Figure 1.</b> 2D affine transformation invariant image-matching</div>
+                </div>
+                <p>
+                    If the input is a composite of images or image fragments, the algorithm will return matches for each
+                    image/image fragment (Figure 2)
+                </p>
+                <div class="compositeMatchingImageWrapper articleContent">
+                    <img src="images/compositeMatching.png" class="compositeMatchingImage" style="width: 700px; height: 1230px" />
+                    <div class="figureText"><b>Figure 2.</b> The query image (c), which is a composite of (a) and (b), matches the
+                    two images (d) and (e) stored in the database</div>
+                </div>
+            </div>
+            <div>
+                <h2>How it Works</h2>
+                <div class="stepsWrapper clearfix">
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber">1.</div>
+                        <div class="stepText">
+                            The algorithm finds keypoints in the input using edge detection<a href="#supKeypointFinder"><sup>1</sup></a>.
+                        </div>
+                    </div>
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber">2.</div>
+                        <div class="stepText">
+                            Each set of three keypoints is converted into a triangle<a href="#supHashLookup"><sup>2</sup></a>.
+                        </div>
+                    </div>
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber">3.</div>
+                        <div class="stepText">
+                            These triangles are transformed into equilateral triangles.
+                        </div>
+                    </div>
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber">4.</div>
+                        <div class="stepText">
+                            A perceptual hashing algorithm (in this case PHash) is used to produce a hash for each triangle.
+                        </div>
+                    </div>
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber">5.</div>
+                        <div class="stepText">
+                            The algorithm compares the hash to those stored in the database and returns all matching
+                            images<a href="#supCompositeLookup"><sup>3</sup></a>.
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        All images in the database have been preprocessed in this manner to produce hashes for comparison.
+                    </p>
+                </div>
+                <div class="articleContent" class="mortyVideoWrapper">
+                    <video controls class="mortyVideo">
+                        <source src="images/morty.webm" type="video/webm; codecs=vp9,vorbis">
+                        <source src="images/morty.mp4" type="video/mp4">
+                    </video>
+                    <div class="figureText"><b>Figure 3.</b> Step-by-step video guide showing how the algorithm operates</div>
+                </div>
+                <div class="stepsWrapper clearfix" style="font-size: 16px; padding-bottom: 0">
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber" style="padding-top: 16px">
+                            <sup id="supKeypointFinder">1</sup>
+                        </div>
+                        <div class="stepText">
+                            Any keypoint-finding algorithm can be used so long as it is 2D
+                            affine transformation-invariant.
+                        </div>
+                    </div>
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber" style="padding-top: 20px">
+                            <sup id="supHashLookup">2</sup>
+                        </div>
+                        <div class="stepText">
+                            The comparison can be done through a hash lookup (which can be done in constant time)
+                            or by finding a ‘nearest-neighbour’ in the database (which can be done
+                            in amortized log<sub><span style="font-size: 10px">2</span></sub>n time).
+                        </div>
+                    </div>
+                    <div class="stepTextWrapper">
+                        <div class="boldListNumber" style="padding-top: 20px">
+                            <sup id="supCompositeLookup">3</sup>
+                        </div>
+                        <div class="stepText">
+                            The algorithm will return multiple matches if the input is a
+                            composite of images.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2>How it Compares to the Competition</h2>
+                <p>
+                    As you can see in Figure 4 below, the algorithm performs better than industry leaders in matching
+                    images which have undergone 2D affine transformations. Even the best-performing service, Google Image
+                    Search, fails to handle a simple 45 degree rotation.
+                </p>
+                <div class="articleContent">
+                    <img src="images/cats image.jpg" style="width: 100%">
+                    <div class="figureText">
+                        <b>Figure 4.</b> Comparison of the image-matching capabilities of our
+                        algorithm versus market leaders.
+                    </div>
+                </div>
+                <p>
+                    Market leaders show limited ability to find matches of images which have undergone certain transformations.
+                    Our algorithm solves this problem for 2D affine transformations and, if used in
+                    conjunction with other modern techniques, offers a significant improvement in reverse-image searching.
+                </p>
+            </div>
         </div>
     </article>
 </div>
