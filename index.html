@@ -388,9 +388,34 @@
             font-weight: bold;
         }
 
-	#queryImageCanvasUiOverlay{
-	    touch-action: none;
-	}
+        #queryImageCanvasUiOverlay{
+            touch-action: none;
+        }
+        footer {
+            background-color: #f7f7f7;
+            width: 100%;
+            height: 150px;
+        }
+        .footerContents {
+            margin: auto;
+            width: 600px;
+            padding: 40px 0px;
+            text-align: center;
+        }
+        .styleCopied {
+            width: 200px;
+            display: block;
+            float: left;
+        }
+        .styleCopiedLink {
+            font-size: 13px;
+            color: #999;
+        }
+        .contactMe {
+            font-size: 15px;
+            color: #999;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
@@ -562,11 +587,11 @@
             <br>
             <p class="stepsWrapper">
                 <span class="boldListNumber">1.</span>
-                The algorithm finds keypoints in the input using edge detection<sup>1</sup>.
+                The algorithm finds keypoints in the input using edge detection<a href="#supKeypointFinder"><sup>1</sup></a>.
                 <br>
                 <br>
                 <span class="boldListNumber">2.</span>
-                Each set of three keypoints is converted into a triangle<sup>2</sup>.
+                Each set of three keypoints is converted into a triangle<a href="#supHashLookup"><sup>2</sup></a>.
                 <br>
                 <br>
                 <span class="boldListNumber">3.</span>
@@ -578,7 +603,7 @@
                 <br>
                 <br>
                 <span class="boldListNumber">5.</span>
-                The algorithm compares the hash to those stored in the database and returns all matching images<sup>3</sup>.
+                The algorithm compares the hash to those stored in the database and returns all matching images<a href="#supCompositeLookup"><sup>3</sup></a>.
                 <br>
                 <br>
             </p>
@@ -592,13 +617,13 @@
             <span class="figureText">Figure 3. Step-by-step video guide showing how the algorithm operates</span>
             <br>
             <p>
-                <sup>1</sup> Any keypoint-finding software can be used so long as it is 2D affine transformation-invariant.
+                <sup id="supKeypointFinder">1</sup> Any keypoint-finding software can be used so long as it is 2D affine transformation-invariant.
                 <br>
-                <sup>2</sup> The comparison can be done through a hash lookup (which can be done in constant time)
+                <sup id="supHashLookup">2</sup> The comparison can be done through a hash lookup (which can be done in constant time)
                 or by finding a ‘nearest-neighbour’ in the database (which can be done
                 in amortized log<sub><span style="font-size: 10px">2</span></sub>n time).
                 <br>
-                <sup>3</sup> The algorithm will return multiple matches if the input is a composite of images.
+                <sup id="supCompositeLookup">3</sup> The algorithm will return multiple matches if the input is a composite of images.
             </p>
             <br>
             <br>
@@ -623,9 +648,6 @@
         </div>
     </div>
 </div>
-<svg id="lineSvgTag" style="display: inline;position: absolute; min-height: 4px;min-width: 4px;">
-    <line id="line" x1="0" y1="0" x2="0" y2="0" style="stroke:rgb(255,0,0);stroke-width:2"/>
-</svg>
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
@@ -669,6 +691,14 @@ $('#myTabs a').click(function (e) {
 
 </script>
 </body>
+<footer>
+    <div class="footerContents">
+        <span class="styleCopied"><a href="http://playground.tensorflow.org" class="styleCopiedLink">Style copied from here</a></span>
+        <span class="styleCopied"><a href="http://github.com/pippy360" class="styleCopiedLink">My Github</a></span>
+        <span class="styleCopied"><a href="#" class="styleCopiedLink">Source on github</a></span>
+        <div class="contactMe">Contact me: murphyt7@tcd.ie</div>
+    </div>
+</footer>
 <script>
 
 </script>
