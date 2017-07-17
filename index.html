@@ -155,15 +155,15 @@
                 <h2 style="margin-top: 10px">About</h2>
                 <p>
                     This demo showcases an algorithm which performs 2D affine transformation-invariant partial image-matching
-                    in sublinear time. The algorithm compares the input to its database of preprocessed images and determines
+                    in sublinear time. The algorithm compares an input image to its database of preprocessed images and determines
                     if the input matches any image in the database. The database need not contain the original image as inputs
                     can be matched to any 2D affine transformation of the original. This means that images which have been
                     scaled (uniformly or non-uniformly), skewed, translated, cropped or rotated (or have undergone any combination
                     of these transformations) can be identified as coming from the same source image (Figure 1).
                 </p>
                 <p>
-                    The algorithm runs in sublinear time, regardless of the number of transformations applied or the number
-                    of images in the database. Note that if image-matching could not be done in sublinear time it would not
+                    The algorithm runs in sublinear time with respect to the number of images in the database, regardless of the number of transformations applied. 
+		Note that if image-matching could not be done in sublinear time it would not
                     function at the scale that the likes of Google or Microsoft require.
                 </p>
                 <div class="affineDemoVideoWrapper articleContent">
