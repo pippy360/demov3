@@ -135,6 +135,7 @@ h2 {
 }
 
 .header {
+    position: relative; 
     background-color: #183D4E;
     width: 100%;
     min-width: 1200px;
